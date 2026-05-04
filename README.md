@@ -141,6 +141,8 @@ Use it lesson by lesson to understand the codebase, then make small changes and 
 
 The app also includes a protected `Lernen` area with AP1/AP2 explanations, examples, exam tips, practice tasks, mini quizzes, flashcards, module detail pages, exam simulations, and local progress tracking.
 
+The protected `Lehrplan` page adds school-style learning units for application development: lesson texts, key terms, memory rules, school exercises, exam tasks, and self-checks.
+
 ---
 
 ## API Overview
