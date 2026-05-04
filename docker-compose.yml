@@ -1,0 +1,16 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: exampilot-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: exampilot
+      POSTGRES_PASSWORD: exampilot
+      POSTGRES_DB: exampilot
+    ports:
+      - "5432:5432"
+    volumes:
+      - exampilot_pgdata:/var/lib/postgresql/data
+
+volumes:
+  exampilot_pgdata:
