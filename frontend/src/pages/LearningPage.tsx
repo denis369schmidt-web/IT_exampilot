@@ -132,11 +132,40 @@ export function LearningPage() {
                 </button>
               </div>
 
-              <div className="mt-6 grid gap-5 lg:grid-cols-3">
+              <div className="mt-6 grid gap-5 lg:grid-cols-2">
+                <div className="rounded-xl bg-slate-950 p-4">
+                  <h3 className="font-semibold text-slate-100">Erklaerung</h3>
+                  <div className="mt-3 space-y-3 text-sm leading-6 text-slate-400">
+                    {module.explanation.map((item) => (
+                      <p key={item}>{item}</p>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="rounded-xl bg-slate-950 p-4">
+                  <h3 className="font-semibold text-slate-100">Beispiele</h3>
+                  <ul className="mt-3 space-y-2 text-sm leading-6 text-slate-400">
+                    {module.examples.map((item) => (
+                      <li key={item}>- {item}</li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+
+              <div className="mt-5 grid gap-5 lg:grid-cols-3">
                 <div>
                   <h3 className="font-semibold text-slate-100">Lernen</h3>
                   <ul className="mt-3 space-y-2 text-sm text-slate-400">
                     {module.learn.map((item) => (
+                      <li key={item}>- {item}</li>
+                    ))}
+                  </ul>
+                </div>
+
+                <div>
+                  <h3 className="font-semibold text-slate-100">Pruefungstipps</h3>
+                  <ul className="mt-3 space-y-2 text-sm text-slate-400">
+                    {module.examTips.map((item) => (
                       <li key={item}>- {item}</li>
                     ))}
                   </ul>
@@ -150,12 +179,24 @@ export function LearningPage() {
                     ))}
                   </ul>
                 </div>
+              </div>
 
-                <div>
-                  <h3 className="font-semibold text-slate-100">Kannst du es?</h3>
-                  <p className="mt-3 rounded-xl bg-slate-950 p-4 text-sm leading-6 text-slate-300">
-                    {module.proof}
-                  </p>
+              <div className="mt-5 grid gap-5 lg:grid-cols-[1fr_360px]">
+                <div className="rounded-xl border border-slate-800 bg-slate-950 p-4">
+                  <h3 className="font-semibold text-slate-100">Mini-Quiz</h3>
+                  <div className="mt-3 grid gap-3 md:grid-cols-2">
+                    {module.quiz.map((item) => (
+                      <div key={item.question} className="rounded-lg bg-slate-900 p-4">
+                        <p className="text-sm font-semibold text-slate-200">{item.question}</p>
+                        <p className="mt-2 text-sm leading-6 text-slate-400">{item.answer}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="rounded-xl border border-emerald-900 bg-emerald-950/30 p-4">
+                  <h3 className="font-semibold text-emerald-200">Kannst du es?</h3>
+                  <p className="mt-3 text-sm leading-6 text-emerald-50">{module.proof}</p>
                 </div>
               </div>
             </article>
