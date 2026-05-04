@@ -13,6 +13,7 @@ The project demonstrates:
 - Backend validation
 - Error handling
 - Dashboard aggregation
+- AP1/AP2 learning modules
 - Docker-based local development
 - Test-ready project structure
 
@@ -137,6 +138,8 @@ LEARNING_PATH.md
 ```
 
 Use it lesson by lesson to understand the codebase, then make small changes and commit them.
+
+The app also includes a protected `Lernen` page with AP1/AP2 modules, practice tasks, and local progress tracking.
 
 ---
 

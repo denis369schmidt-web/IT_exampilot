@@ -2,6 +2,8 @@
 
 Use this project as your practical full-stack learning project. The goal is not to memorize every file, but to understand how one real feature travels through frontend, API, validation, business logic, database, tests, and Git.
 
+The running app also has a `Lernen` page. Use it as your AP1/AP2 checklist while you work through this file.
+
 ## How To Learn With This App
 
 Work in small loops:

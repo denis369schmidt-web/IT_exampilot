@@ -19,6 +19,9 @@ export function Layout() {
             <Link to="/" className="hover:text-white">
               Dashboard
             </Link>
+            <Link to="/learning" className="hover:text-white">
+              Lernen
+            </Link>
             <button
               onClick={logout}
               className="rounded-lg bg-slate-800 px-3 py-2 hover:bg-slate-700"
