@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { useMemo, useState } from "react";
 import { learningCatalog, trackLabels, LearningTrack } from "../data/learningCatalog";
 
@@ -17,7 +18,7 @@ function readDoneModules() {
 
 export function LearningPage() {
   const [activeFilter, setActiveFilter] = useState<LearningTrack | "ALL">("ALL");
-  const [doneModules, setDoneModules] = useState<Set<string>>(() => readDoneModules());
+  const [doneModules] = useState<Set<string>>(() => readDoneModules());
 
   const visibleModules = useMemo(() => {
     if (activeFilter === "ALL") return learningCatalog;
@@ -27,27 +28,14 @@ export function LearningPage() {
   const doneCount = doneModules.size;
   const completion = Math.round((doneCount / learningCatalog.length) * 100);
 
-  function toggleDone(id: string) {
-    const next = new Set(doneModules);
-
-    if (next.has(id)) {
-      next.delete(id);
-    } else {
-      next.add(id);
-    }
-
-    setDoneModules(next);
-    localStorage.setItem("exampilot_learning_done", JSON.stringify([...next]));
-  }
-
   return (
     <div>
       <div className="mb-8">
         <p className="text-sm uppercase tracking-[0.3em] text-emerald-400">AP1 / AP2 Lernsystem</p>
         <h1 className="mt-2 text-4xl font-bold tracking-tight">Programmierer-Pruefung meistern</h1>
         <p className="mt-3 max-w-3xl text-slate-400">
-          Arbeite dich durch die Module, mache die Uebungen und hake ab, was du wirklich erklaeren kannst.
-          Diese Seite verbindet IHK-Pruefungsbereiche mit praktischer Fullstack-Entwicklung an ExamPilot.
+          Alles Wichtige ist direkt in der App: Kapitel, Beispiele, Pruefungstipps, Karteikarten,
+          Uebungen und Simulationen. Oeffne ein Modul und lerne es dort komplett durch.
         </p>
       </div>
 
@@ -68,9 +56,9 @@ export function LearningPage() {
           <p className="mt-2 text-xs text-slate-500">Lokal in deinem Browser gespeichert</p>
         </div>
         <div className="rounded-2xl border border-slate-800 bg-slate-900 p-5 shadow-xl">
-          <p className="text-sm text-slate-400">Naechster Fokus</p>
-          <p className="mt-2 text-3xl font-bold text-white">1 Modul</p>
-          <p className="mt-2 text-xs text-slate-500">Lieber taeglich klein als selten riesig</p>
+          <p className="text-sm text-slate-400">Methode</p>
+          <p className="mt-2 text-3xl font-bold text-white">4 Schritte</p>
+          <p className="mt-2 text-xs text-slate-500">Lesen, Karten, Simulation, Abhaken</p>
         </div>
       </section>
 
@@ -92,7 +80,7 @@ export function LearningPage() {
         </div>
       </section>
 
-      <section className="mt-8 grid gap-5">
+      <section className="mt-8 grid gap-5 md:grid-cols-2">
         {visibleModules.map((module) => {
           const isDone = doneModules.has(module.id);
 
@@ -101,104 +89,47 @@ export function LearningPage() {
               key={module.id}
               className="rounded-2xl border border-slate-800 bg-slate-900 p-6 shadow-xl"
             >
-              <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
-                <div>
-                  <div className="flex flex-wrap gap-2 text-xs font-semibold">
-                    <span className="rounded bg-slate-800 px-2 py-1 text-emerald-300">
-                      {module.examPart}
-                    </span>
-                    <span className="rounded bg-slate-800 px-2 py-1 text-blue-300">
-                      {trackLabels[module.track]}
-                    </span>
-                    <span className="rounded bg-slate-800 px-2 py-1 text-slate-300">
-                      {module.level}
-                    </span>
-                  </div>
-                  <h2 className="mt-3 text-2xl font-bold">{module.title}</h2>
-                  <p className="mt-2 max-w-3xl text-sm leading-6 text-slate-400">
-                    {module.whyItMatters}
-                  </p>
-                </div>
-
-                <button
-                  onClick={() => toggleDone(module.id)}
-                  className={`rounded-lg px-4 py-3 text-sm font-semibold ${
-                    isDone
-                      ? "bg-emerald-500 text-slate-950"
-                      : "bg-slate-800 text-slate-200 hover:bg-slate-700"
-                  }`}
-                >
-                  {isDone ? "Gelernt" : "Abhaken"}
-                </button>
+              <div className="flex flex-wrap gap-2 text-xs font-semibold">
+                <span className="rounded bg-slate-800 px-2 py-1 text-emerald-300">
+                  {module.examPart}
+                </span>
+                <span className="rounded bg-slate-800 px-2 py-1 text-blue-300">
+                  {trackLabels[module.track]}
+                </span>
+                <span className="rounded bg-slate-800 px-2 py-1 text-slate-300">
+                  {module.level}
+                </span>
+                {isDone && (
+                  <span className="rounded bg-emerald-500 px-2 py-1 text-slate-950">
+                    Gelernt
+                  </span>
+                )}
               </div>
 
-              <div className="mt-6 grid gap-5 lg:grid-cols-2">
-                <div className="rounded-xl bg-slate-950 p-4">
-                  <h3 className="font-semibold text-slate-100">Erklaerung</h3>
-                  <div className="mt-3 space-y-3 text-sm leading-6 text-slate-400">
-                    {module.explanation.map((item) => (
-                      <p key={item}>{item}</p>
-                    ))}
-                  </div>
-                </div>
+              <h2 className="mt-4 text-2xl font-bold">{module.title}</h2>
+              <p className="mt-2 text-sm leading-6 text-slate-400">{module.whyItMatters}</p>
 
-                <div className="rounded-xl bg-slate-950 p-4">
-                  <h3 className="font-semibold text-slate-100">Beispiele</h3>
-                  <ul className="mt-3 space-y-2 text-sm leading-6 text-slate-400">
-                    {module.examples.map((item) => (
-                      <li key={item}>- {item}</li>
-                    ))}
-                  </ul>
+              <div className="mt-5 grid grid-cols-3 gap-3 text-center text-xs text-slate-400">
+                <div className="rounded-lg bg-slate-950 p-3">
+                  <p className="text-lg font-bold text-white">{module.explanation.length}</p>
+                  Kapitel
+                </div>
+                <div className="rounded-lg bg-slate-950 p-3">
+                  <p className="text-lg font-bold text-white">{module.quiz.length}</p>
+                  Karten
+                </div>
+                <div className="rounded-lg bg-slate-950 p-3">
+                  <p className="text-lg font-bold text-white">{module.practice.length}</p>
+                  Uebungen
                 </div>
               </div>
 
-              <div className="mt-5 grid gap-5 lg:grid-cols-3">
-                <div>
-                  <h3 className="font-semibold text-slate-100">Lernen</h3>
-                  <ul className="mt-3 space-y-2 text-sm text-slate-400">
-                    {module.learn.map((item) => (
-                      <li key={item}>- {item}</li>
-                    ))}
-                  </ul>
-                </div>
-
-                <div>
-                  <h3 className="font-semibold text-slate-100">Pruefungstipps</h3>
-                  <ul className="mt-3 space-y-2 text-sm text-slate-400">
-                    {module.examTips.map((item) => (
-                      <li key={item}>- {item}</li>
-                    ))}
-                  </ul>
-                </div>
-
-                <div>
-                  <h3 className="font-semibold text-slate-100">Ueben</h3>
-                  <ul className="mt-3 space-y-2 text-sm text-slate-400">
-                    {module.practice.map((item) => (
-                      <li key={item}>- {item}</li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-
-              <div className="mt-5 grid gap-5 lg:grid-cols-[1fr_360px]">
-                <div className="rounded-xl border border-slate-800 bg-slate-950 p-4">
-                  <h3 className="font-semibold text-slate-100">Mini-Quiz</h3>
-                  <div className="mt-3 grid gap-3 md:grid-cols-2">
-                    {module.quiz.map((item) => (
-                      <div key={item.question} className="rounded-lg bg-slate-900 p-4">
-                        <p className="text-sm font-semibold text-slate-200">{item.question}</p>
-                        <p className="mt-2 text-sm leading-6 text-slate-400">{item.answer}</p>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="rounded-xl border border-emerald-900 bg-emerald-950/30 p-4">
-                  <h3 className="font-semibold text-emerald-200">Kannst du es?</h3>
-                  <p className="mt-3 text-sm leading-6 text-emerald-50">{module.proof}</p>
-                </div>
-              </div>
+              <Link
+                to={`/learning/${module.id}`}
+                className="mt-5 inline-flex w-full justify-center rounded-lg bg-emerald-500 px-4 py-3 text-sm font-semibold text-slate-950 hover:bg-emerald-400"
+              >
+                Modul oeffnen
+              </Link>
             </article>
           );
         })}
