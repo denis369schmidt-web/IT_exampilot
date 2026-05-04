@@ -5,9 +5,12 @@
   "main": "dist/server.js",
   "scripts": {
     "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
+    "dev:sqlite": "prisma generate --schema prisma/schema.sqlite.prisma && ts-node-dev --respawn --transpile-only src/server.ts",
     "build": "prisma generate && tsc",
     "start": "node dist/server.js",
     "prisma:migrate": "prisma migrate dev",
+    "prisma:sqlite:push": "prisma db push --schema prisma/schema.sqlite.prisma",
+    "sqlite:init": "node scripts/init-sqlite.js",
     "prisma:studio": "prisma studio",
     "test": "jest --passWithNoTests"
   },

@@ -105,6 +105,39 @@ Frontend runs on:
 http://localhost:5173
 ```
 
+### No-Admin Local Development
+
+If you cannot install Docker or PostgreSQL, use the local SQLite setup:
+
+```bash
+cd backend
+npm install
+npm run sqlite:init
+npm run dev:sqlite
+```
+
+Then start the frontend in another terminal:
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+This is useful for learning locally. The main portfolio stack still uses PostgreSQL.
+
+---
+
+## Learning With This Project
+
+This repository includes a practical learning guide:
+
+```text
+LEARNING_PATH.md
+```
+
+Use it lesson by lesson to understand the codebase, then make small changes and commit them.
+
 ---
 
 ## API Overview
