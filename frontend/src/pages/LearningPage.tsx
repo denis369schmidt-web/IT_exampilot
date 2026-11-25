@@ -37,6 +37,12 @@ export function LearningPage() {
           Alles Wichtige ist direkt in der App: Kapitel, Beispiele, Pruefungstipps, Karteikarten,
           Uebungen und Simulationen. Oeffne ein Modul und lerne es dort komplett durch.
         </p>
+        <Link
+          to="/csharp"
+          className="mt-5 inline-flex rounded-xl border border-cyan-400/40 bg-cyan-500/10 px-4 py-3 text-sm font-semibold text-cyan-200 hover:bg-cyan-500/20"
+        >
+          Priority: C# Dojo — interaktiv & prüfungsnah üben
+        </Link>
       </div>
 
       <section className="grid gap-4 md:grid-cols-4">

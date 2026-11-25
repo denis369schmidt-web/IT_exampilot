@@ -22,6 +22,9 @@ export function Layout() {
             <Link to="/learning" className="hover:text-white">
               Lernen
             </Link>
+            <Link to="/csharp" className="font-semibold text-cyan-300 hover:text-cyan-200">
+              C# Dojo
+            </Link>
             <Link to="/curriculum" className="hover:text-white">
               Lehrplan
             </Link>

@@ -1,6 +1,8 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 import type { ReactElement } from "react";
 import { Layout } from "./components/Layout";
+import { CsharpDojoPage } from "./pages/CsharpDojoPage";
+import { CsharpModulePage } from "./pages/CsharpModulePage";
 import { CurriculumPage } from "./pages/CurriculumPage";
 import { DashboardPage } from "./pages/DashboardPage";
 import { LearningModulePage } from "./pages/LearningModulePage";
@@ -33,6 +35,8 @@ export default function App() {
         <Route path="/" element={<DashboardPage />} />
         <Route path="/learning" element={<LearningPage />} />
         <Route path="/learning/:moduleId" element={<LearningModulePage />} />
+        <Route path="/csharp" element={<CsharpDojoPage />} />
+        <Route path="/csharp/:moduleId" element={<CsharpModulePage />} />
         <Route path="/curriculum" element={<CurriculumPage />} />
       </Route>
     </Routes>

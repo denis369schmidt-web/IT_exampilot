@@ -143,6 +143,8 @@ The app also includes a protected `Lernen` area with AP1/AP2 explanations, examp
 
 The protected `Lehrplan` page adds school-style learning units for application development: lesson texts, key terms, memory rules, school exercises, exam tasks, and self-checks.
 
+The protected **C# Dojo** is the priority learning track for IHK AP2 algorithm/OOP prep: 10 interactive modules with theory, code examples, flashcards, quizzes, fill-in-the-blank, bug hunts, code-ordering, output prediction, XP, combos and badges.
+
 ---
 
 ## API Overview
