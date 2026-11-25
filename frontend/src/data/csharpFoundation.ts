@@ -4,41 +4,50 @@ import type { CsharpModule } from "./csharpTypes";
 export const csharpFoundation: CsharpModule[] = [
   {
     id: "cs-zero-program",
-    order: 1,
+    order: 11,
     title: "Was ist ein C#-Programm?",
     level: "Starter",
-    path: ["von-null", "klassenarbeit"],
-    examFocus: "Klassenarbeit · Verständnis von Grund auf",
+    path: ["von-null", "klassenarbeit", "netfx"],
+    examFocus: "1. Klassenarbeit · .NET Framework Verständnis",
     whyItMatters:
-      "Bevor du Syntax paukst, musst du verstehen: Computer führt Anweisungen der Reihe nach aus. C# ist die Sprache, in der du diese Anweisungen schreibst.",
+      "Bevor du Syntax paukst, musst du verstehen: Computer führt Anweisungen der Reihe nach aus. Unter .NET Framework steht das in einer klassischen Main-Methode.",
     minutes: 20,
     goals: [
       "Programm, Anweisung und Ausgabe erklären",
-      "Rolle von Main / Top-Level-Statements grob kennen",
+      "Rolle von static void Main im .NET Framework kennen",
       "Verstehen: Compiler prüft, Runtime führt aus"
     ],
     theory: [
       "Ein Programm ist eine Liste von Anweisungen. Der Computer arbeitet sie von oben nach unten ab — außer Schleifen/Verzweigungen sagen etwas anderes.",
-      "C# ist eine von Microsoft entwickelte Sprache für .NET. Du schreibst Quellcode (`.cs`), der Compiler macht daraus ausführbaren Code.",
-      "Klassisch startet alles in `static void Main(...)`. In modernen Projekten reichen oft Top-Level-Statements: Code direkt in der Datei.",
+      "C# läuft bei euch auf dem .NET Framework (in Visual Studio oft als Konsolen- oder WinForms-Projekt). Quellcode endet auf `.cs`, der Compiler erzeugt eine .exe.",
+      "In der ersten Klassenarbeit startet alles klassisch in `static void Main(string[] args)` innerhalb von `class Program` — nicht mit modernen Top-Level-Statements.",
       "`Console.WriteLine(...)` schreibt Text in die Konsole und macht einen Zeilenumbruch. `Write` ohne Line bleibt in derselben Zeile.",
       "Geschweifte Klammern `{ }` markieren Blöcke. Semikolons `;` beenden die meisten Anweisungen. Groß-/Kleinschreibung zählt (`WriteLine` ≠ `writeline`)."
     ],
     remember: [
       "Reihenfolge zählt: Zeile 1 vor Zeile 2.",
       "WriteLine = ausgeben + neue Zeile.",
-      "Fehler beim Kompilieren ≠ Laufzeitfehler."
+      ".NET Framework → klassisches Main-Gerüst."
     ],
     codeExamples: [
       {
-        title: "Erstes Programm",
+        title: "Erstes .NET-Framework-Programm",
         code: `using System;
 
-Console.WriteLine("Hallo Klassenarbeit!");
-Console.Write("Name: ");
-string? name = Console.ReadLine();
-Console.WriteLine("Hi " + name);`,
-        note: "Lesen → speichern → verarbeiten → ausgeben ist das Grundmuster."
+namespace Klassenarbeit1
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.WriteLine("Hallo Klassenarbeit!");
+            Console.Write("Name: ");
+            string name = Console.ReadLine();
+            Console.WriteLine("Hi " + name);
+        }
+    }
+}`,
+        note: "Lesen → speichern → verarbeiten → ausgeben — im klassischen Framework-Gerüst."
       }
     ],
     walkthrough: {
@@ -147,10 +156,10 @@ Console.WriteLine(a);`,
   },
   {
     id: "cs-zero-variables",
-    order: 2,
+    order: 12,
     title: "Variablen wirklich verstehen",
     level: "Starter",
-    path: ["von-null", "klassenarbeit"],
+    path: ["von-null", "klassenarbeit", "netfx"],
     examFocus: "Klassenarbeit · Variablen & Zuweisung",
     whyItMatters:
       "Variablen sind benannte Schubladen im Speicher. Wer Zuweisung und Typ verwechselt, scheitert an fast jeder Aufgabe.",
@@ -280,10 +289,10 @@ Console.WriteLine(n);`,
   },
   {
     id: "cs-zero-operators",
-    order: 3,
+    order: 13,
     title: "Operatoren & Ausdrücke",
     level: "Starter",
-    path: ["von-null", "klassenarbeit"],
+    path: ["von-null", "klassenarbeit", "netfx"],
     examFocus: "Klassenarbeit · Rechnen & Vergleichen",
     whyItMatters:
       "Ausdrücke sind die Rechenregeln deines Programms. Priorität, Vergleich und boolsche Logik kommen in jeder Klassenarbeit.",
@@ -398,10 +407,10 @@ if (x = 5)
   },
   {
     id: "cs-zero-branches",
-    order: 4,
+    order: 14,
     title: "Entscheidungen: if/else wirklich können",
     level: "Starter",
-    path: ["von-null", "klassenarbeit"],
+    path: ["von-null", "klassenarbeit", "netfx"],
     examFocus: "Klassenarbeit · Verzweigungen",
     whyItMatters:
       "Klassenarbeiten lieben Notenstufen, Rabatte, Alterschecks. Du musst Zweige sicher bauen und testen.",
@@ -540,10 +549,10 @@ if (x > 5);
   },
   {
     id: "cs-zero-loops",
-    order: 5,
+    order: 15,
     title: "Schleifen im Kopf ausführen",
     level: "Azubi",
-    path: ["von-null", "klassenarbeit"],
+    path: ["von-null", "klassenarbeit", "netfx"],
     examFocus: "Klassenarbeit · for/while nachvollziehen",
     whyItMatters:
       "In Klassenarbeiten musst du oft sagen, was eine Schleife ausgibt oder wie oft sie läuft. Dafür brauchst du Tracing.",
@@ -684,10 +693,10 @@ for (int i = 0; i <= 4; i++) c++;`,
   },
   {
     id: "cs-zero-arrays",
-    order: 6,
+    order: 16,
     title: "Arrays von Null",
     level: "Azubi",
-    path: ["von-null", "klassenarbeit"],
+    path: ["von-null", "klassenarbeit", "netfx"],
     examFocus: "Klassenarbeit · Arrays & Index",
     whyItMatters:
       "Arrays sind die erste Datenstruktur in der Schule. Indexfehler und Length-Verwechslung sind Klassiker.",
@@ -803,10 +812,10 @@ for (int i = 0; i <= a.Length; i++)
   },
   {
     id: "cs-zero-methods-school",
-    order: 7,
+    order: 17,
     title: "Methoden verstehen (Schule)",
     level: "Azubi",
-    path: ["von-null", "klassenarbeit"],
+    path: ["von-null", "klassenarbeit", "netfx"],
     examFocus: "Klassenarbeit · Methodenaufruf & return",
     whyItMatters:
       "Methoden zerlegen Probleme. In der KA musst du Signaturen lesen, Parameter füllen und Rückgaben nutzen.",
@@ -943,10 +952,10 @@ int m = Max(4, 9);`,
   },
   {
     id: "cs-ka-training",
-    order: 8,
+    order: 18,
     title: "Klassenarbeit Intensiv: Mixed Set",
     level: "Prüfungsnah",
-    path: ["klassenarbeit"],
+    path: ["klassenarbeit", "netfx"],
     examFocus: "Klassenarbeit Simulation",
     whyItMatters:
       "Hier trainierst du gemischt wie in einer echten KA: lesen, tracen, Fehler finden, kleine Algorithmen.",

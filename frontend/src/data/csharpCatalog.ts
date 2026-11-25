@@ -2,6 +2,7 @@ import { csharpCatalogPart1 } from "./csharpCatalogPart1";
 import { csharpCatalogPart2 } from "./csharpCatalogPart2";
 import { csharpCatalogPart3 } from "./csharpCatalogPart3";
 import { csharpFoundation } from "./csharpFoundation";
+import { csharpNetFramework } from "./csharpNetFramework";
 import type { CsharpExercise, CsharpModule, CsharpPath } from "./csharpTypes";
 
 export type {
@@ -18,11 +19,12 @@ export { csharpLevelColors } from "./csharpTypes";
 function normalize(module: CsharpModule): CsharpModule {
   return {
     ...module,
-    path: module.path ?? ["pruefung", "klassenarbeit"]
+    path: module.path ?? ["pruefung", "klassenarbeit", "netfx"]
   };
 }
 
 export const csharpCatalog: CsharpModule[] = [
+  ...csharpNetFramework,
   ...csharpFoundation,
   ...csharpCatalogPart1,
   ...csharpCatalogPart2,

@@ -7,89 +7,89 @@ export interface StudyPlanDay {
   minutes: number;
 }
 
-/** 7-Tage Intensivplan für die Klassenarbeit – von Null zu sicher */
+/** 7-Tage Intensivplan: 1. Klassenarbeit .NET Framework */
 export const klassenarbeitPlan: StudyPlanDay[] = [
   {
     day: 1,
-    title: "Programm & Variablen",
-    focus: "Verstehen, was der Computer Zeile für Zeile macht",
-    moduleIds: ["cs-zero-program", "cs-zero-variables"],
+    title: "Visual Studio + Main-Gerüst",
+    focus: ".NET Framework Projekt & klassische Program/Main-Struktur verstehen",
+    moduleIds: ["netfx-vs-project", "netfx-program-main", "cs-zero-program"],
     checklist: [
-      "Walkthroughs vollständig durchklicken",
-      "Alle Trace-Übungen lösen",
-      "Eigene 5 Zuweisungsbeispiele auf Papier tracen"
-    ],
-    minutes: 45
-  },
-  {
-    day: 2,
-    title: "Operatoren & if/else",
-    focus: "Bedingungen auf Deutsch formulieren, dann coden",
-    moduleIds: ["cs-zero-operators", "cs-zero-branches"],
-    checklist: [
-      "`=` vs `==` sicher unterscheiden",
-      "Noten-/Rabattaufgabe selbst aufschreiben",
-      "Grenzfälle 0, genau Grenze, negativ testen"
+      "Unterschied Solution/Projekt erklären können",
+      "Main-Gerüst auswendig skizzieren",
+      "Walkthrough „Gerüst von außen nach innen“ durchklicken"
     ],
     minutes: 50
   },
   {
-    day: 3,
-    title: "Schleifen tracen",
-    focus: "Durchläufe zählen und Ausgaben vorhersagen",
-    moduleIds: ["cs-zero-loops", "cs-control-flow"],
+    day: 2,
+    title: "Variablen, Operatoren, Console-IO",
+    focus: "Zuweisen, rechnen, ReadLine/Parse unter Framework",
+    moduleIds: ["cs-zero-variables", "cs-zero-operators", "netfx-console-io"],
     checklist: [
-      "for-Kopf in Start/Bedingung/Update zerlegen",
-      "Tabelle: Durchlauf | i | Ausgabe",
-      "Eine while-Endlosschleife absichtlich bauen und reparieren"
+      "`=` vs `==` sicher",
+      "ReadLine → Parse nachspielen",
+      "Fallstrick \"Summe: \" + a + b erklären"
+    ],
+    minutes: 55
+  },
+  {
+    day: 3,
+    title: "if/else & Schleifen tracen",
+    focus: "Verzweigungen und for/while im Kopf ausführen",
+    moduleIds: ["cs-zero-branches", "cs-zero-loops"],
+    checklist: [
+      "Noten-/Rabatt-if selbst schreiben",
+      "Schleifen-Tabelle: Durchlauf | i | Ausgabe",
+      "Grenzfälle 0 und genau Grenze testen"
     ],
     minutes: 55
   },
   {
     day: 4,
     title: "Arrays & Methoden",
-    focus: "Index, Length, Aufruf/return",
-    moduleIds: ["cs-zero-arrays", "cs-zero-methods-school", "cs-methods"],
+    focus: "Index, Length, return — auch in Main aufrufen",
+    moduleIds: ["cs-zero-arrays", "cs-zero-methods-school"],
     checklist: [
-      "Summe und Max im Array von Hand rechnen",
-      "Methode ZaehleGroesser erklären können",
-      "3 Predict-Output-Aufgaben ohne Spicken"
+      "Summe/Max im Array von Hand",
+      "Methode + Aufruf aus Main skizzieren",
+      "3 Trace-/Predict-Übungen ohne Spicken"
     ],
     minutes: 60
   },
   {
     day: 5,
-    title: "Datentypen & typische Fallen",
-    focus: "Parse, Integer-Division, bool",
-    moduleIds: ["cs-basics-types", "cs-strings-parse"],
+    title: "Windows Forms Basics",
+    focus: "Button, TextBox, Label, Click-Handler, MessageBox",
+    moduleIds: ["netfx-winforms-basics", "netfx-winforms-logic"],
     checklist: [
-      "5/2 vs 5/2.0 erklären",
-      "TryParse vs Parse gegenüberstellen",
-      "Bug-Hunt-Übungen wiederholen"
+      "Click-Signatur erklären können",
+      "TextBox.Text → Parse → Label.Text üben",
+      "Validierung mit TryParse + return"
     ],
-    minutes: 50
+    minutes: 60
   },
   {
     day: 6,
-    title: "Collections & kleine Algorithmen",
-    focus: "List, suchen, zählen, filtern",
-    moduleIds: ["cs-arrays-collections", "cs-algorithms"],
+    title: "UI trifft Algorithmus",
+    focus: "Dieselbe Logik in Console und WinForms",
+    moduleIds: ["cs-algorithms", "cs-basics-types", "netfx-winforms-logic"],
     checklist: [
-      "Lineare Suche auf Papier schreiben",
-      "Min mit a[0] initialisieren begründen",
-      "Eine Zähl-Aufgabe mit foreach lösen"
+      "Summe 1..n in Console UND als Button-Logik",
+      "Integer-Division und Verkettung wiederholen",
+      "ListBox Items.Add einmal bauen"
     ],
     minutes: 60
   },
   {
     day: 7,
-    title: "Klassenarbeit Simulation",
-    focus: "Gemischtes Set unter Zeit",
-    moduleIds: ["cs-ka-training", "cs-cheatsheet-exam"],
+    title: "KA-Simulation .NET Framework",
+    focus: "Mixed Set unter Zeit — Abgabe-Checkliste",
+    moduleIds: ["netfx-ka1-boss", "cs-ka-training"],
     checklist: [
-      "Mixed Set einmal durchspielen",
-      "Schwache Module nochmals öffnen",
-      "40 Minuten Pause, dann Fehlerkarteikarten"
+      "Boss-Modul komplett",
+      "Main static? Controls benannt? Parse geprüft?",
+      "40 Min Pause, dann Fehlerkarteikarten"
     ],
     minutes: 70
   }
@@ -97,6 +97,7 @@ export const klassenarbeitPlan: StudyPlanDay[] = [
 
 export const pathLabels: Record<string, string> = {
   all: "Alle Module",
+  netfx: ".NET Framework",
   "von-null": "Von Null",
   klassenarbeit: "Klassenarbeit",
   pruefung: "AP2 / Prüfung"

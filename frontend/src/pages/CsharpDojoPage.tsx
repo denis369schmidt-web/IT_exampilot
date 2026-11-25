@@ -20,7 +20,7 @@ type PathFilter = CsharpPath | "all";
 export function CsharpDojoPage() {
   const stats = useMemo(() => totalCsharpStats(), []);
   const [progress, setProgress] = useState<GameProgress>(() => readProgress());
-  const [path, setPath] = useState<PathFilter>("klassenarbeit");
+  const [path, setPath] = useState<PathFilter>("netfx");
 
   useEffect(() => {
     const handler = (event: Event) => {
@@ -47,14 +47,14 @@ export function CsharpDojoPage() {
         <div className="pointer-events-none absolute bottom-0 left-10 h-40 w-40 rounded-full bg-emerald-400/10 blur-3xl animate-drift-delayed" />
 
         <p className="text-sm uppercase tracking-[0.35em] text-cyan-300">
-          C# Dojo · Von Null zur Klassenarbeit
+          C# Dojo · .NET Framework · 1. Klassenarbeit
         </p>
         <h1 className="mt-3 max-w-3xl text-4xl font-bold tracking-tight text-white md:text-5xl">
-          C# intensiv verstehen
+          .NET Framework wirklich verstehen
         </h1>
         <p className="mt-4 max-w-3xl text-slate-300">
-          Für deine Klassenarbeit: zuerst verstehen (Walkthroughs + Speicher-Trace), dann üben
-          (Quiz, Bugs, Output), dann mischen. Kein Auswendiglernen ohne Modell im Kopf.
+          Für deine erste Klassenarbeit in Visual Studio: klassisches Main-Gerüst, Console,
+          Windows Forms, Events und Logik — mit Walkthroughs und Speicher-Trace, nicht nur Quiz.
         </p>
 
         <div className="mt-6 grid grid-cols-2 gap-3 md:grid-cols-5">
@@ -94,10 +94,10 @@ export function CsharpDojoPage() {
       </section>
 
       <section className="mt-8 rounded-2xl border border-amber-500/30 bg-amber-500/5 p-5">
-        <h2 className="text-2xl font-bold text-white">7-Tage Klassenarbeit-Plan</h2>
+        <h2 className="text-2xl font-bold text-white">7-Tage Plan · .NET Framework KA</h2>
         <p className="mt-2 text-sm text-slate-400">
-          Intensiv von Grund auf. Jeden Tag Module öffnen, Walkthrough machen, Übungen lösen,
-          Checkliste abhaken.
+          Nach der Mittagspause starten: Tag 1 Visual Studio + Main, dann Console, if/Schleifen,
+          Arrays, WinForms, Simulation. Jeden Tag Walkthrough + Übungen + Checkliste.
         </p>
         <div className="mt-5 grid gap-3 md:grid-cols-2 xl:grid-cols-3">
           {klassenarbeitPlan.map((day) => (
@@ -133,7 +133,7 @@ export function CsharpDojoPage() {
 
       <section className="mt-8">
         <div className="flex flex-wrap gap-2">
-          {(["klassenarbeit", "von-null", "pruefung", "all"] as PathFilter[]).map((value) => (
+          {(["netfx", "klassenarbeit", "von-null", "pruefung", "all"] as PathFilter[]).map((value) => (
             <button
               key={value}
               onClick={() => setPath(value)}

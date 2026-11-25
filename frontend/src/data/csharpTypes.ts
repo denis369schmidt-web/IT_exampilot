@@ -1,6 +1,6 @@
 export type CsharpLevel = "Starter" | "Azubi" | "Prüfungsnah" | "Boss";
 
-export type CsharpPath = "von-null" | "klassenarbeit" | "pruefung";
+export type CsharpPath = "von-null" | "klassenarbeit" | "netfx" | "pruefung";
 
 export type ExerciseKind =
   | "multipleChoice"
