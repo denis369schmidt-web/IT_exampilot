@@ -40,7 +40,11 @@ export function ExercisePlayer({ exercise, alreadyDone, onSolved }: ExercisePlay
   const [shake, setShake] = useState(false);
 
   const codeLines = useMemo(() => {
-    if (exercise.kind === "spotBug" || exercise.kind === "predictOutput") {
+    if (
+      exercise.kind === "spotBug" ||
+      exercise.kind === "predictOutput" ||
+      exercise.kind === "traceState"
+    ) {
       return exercise.code.split("\n");
     }
     return [];
@@ -63,7 +67,11 @@ export function ExercisePlayer({ exercise, alreadyDone, onSolved }: ExercisePlay
   function check() {
     if (feedback) return;
 
-    if (exercise.kind === "multipleChoice" || exercise.kind === "predictOutput") {
+    if (
+      exercise.kind === "multipleChoice" ||
+      exercise.kind === "predictOutput" ||
+      exercise.kind === "traceState"
+    ) {
       if (selected === null) return;
       finish(selected === exercise.correctIndex);
       return;
@@ -113,7 +121,10 @@ export function ExercisePlayer({ exercise, alreadyDone, onSolved }: ExercisePlay
 
       <h3 className="mt-3 text-xl font-bold text-white">{exercise.prompt}</h3>
 
-      {(exercise.kind === "predictOutput" || exercise.kind === "fillBlank" || exercise.kind === "spotBug") && (
+      {(exercise.kind === "predictOutput" ||
+        exercise.kind === "fillBlank" ||
+        exercise.kind === "spotBug" ||
+        exercise.kind === "traceState") && (
         <pre className="mt-4 overflow-x-auto rounded-xl border border-slate-700 bg-slate-950 p-4 font-mono text-sm leading-7 text-emerald-200">
           {exercise.kind === "fillBlank"
             ? exercise.code
@@ -138,7 +149,13 @@ export function ExercisePlayer({ exercise, alreadyDone, onSolved }: ExercisePlay
         </pre>
       )}
 
-      {exercise.kind === "multipleChoice" || exercise.kind === "predictOutput" ? (
+      {exercise.kind === "traceState" && (
+        <p className="mt-4 text-sm font-semibold text-cyan-200">{exercise.question}</p>
+      )}
+
+      {exercise.kind === "multipleChoice" ||
+      exercise.kind === "predictOutput" ||
+      exercise.kind === "traceState" ? (
         <div className="mt-4 grid gap-2">
           {exercise.options.map((option, index) => {
             const active = selected === index;

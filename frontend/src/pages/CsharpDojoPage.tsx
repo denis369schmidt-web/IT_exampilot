@@ -1,10 +1,12 @@
 import { Link } from "react-router-dom";
 import { useEffect, useMemo, useState } from "react";
 import {
-  csharpCatalog,
   csharpLevelColors,
-  totalCsharpStats
+  modulesForPath,
+  totalCsharpStats,
+  type CsharpPath
 } from "../data/csharpCatalog";
+import { klassenarbeitPlan, pathLabels } from "../data/csharpStudyPlan";
 import {
   accuracy,
   BADGES,
@@ -13,9 +15,12 @@ import {
   type GameProgress
 } from "../lib/gameProgress";
 
+type PathFilter = CsharpPath | "all";
+
 export function CsharpDojoPage() {
   const stats = useMemo(() => totalCsharpStats(), []);
   const [progress, setProgress] = useState<GameProgress>(() => readProgress());
+  const [path, setPath] = useState<PathFilter>("klassenarbeit");
 
   useEffect(() => {
     const handler = (event: Event) => {
@@ -28,7 +33,8 @@ export function CsharpDojoPage() {
 
   const levelInfo = levelFromXp(progress.xp);
   const doneExercises = new Set(progress.completedExercises);
-  const moduleCompletion = csharpCatalog.map((module) => {
+  const visibleModules = modulesForPath(path);
+  const moduleCompletion = visibleModules.map((module) => {
     const total = module.exercises.length;
     const done = module.exercises.filter((item) => doneExercises.has(item.id)).length;
     return { id: module.id, done, total, pct: total ? Math.round((done / total) * 100) : 0 };
@@ -40,21 +46,24 @@ export function CsharpDojoPage() {
         <div className="pointer-events-none absolute -right-10 -top-10 h-56 w-56 rounded-full bg-cyan-400/10 blur-3xl animate-drift" />
         <div className="pointer-events-none absolute bottom-0 left-10 h-40 w-40 rounded-full bg-emerald-400/10 blur-3xl animate-drift-delayed" />
 
-        <p className="text-sm uppercase tracking-[0.35em] text-cyan-300">C# Dojo · Priority Track</p>
+        <p className="text-sm uppercase tracking-[0.35em] text-cyan-300">
+          C# Dojo · Von Null zur Klassenarbeit
+        </p>
         <h1 className="mt-3 max-w-3xl text-4xl font-bold tracking-tight text-white md:text-5xl">
-          C# interaktiv meistern
+          C# intensiv verstehen
         </h1>
         <p className="mt-4 max-w-3xl text-slate-300">
-          Prüfungsnah für IHK AP2: Datentypen, Kontrollfluss, OOP, Collections, Exceptions und
-          Algorithmen — mit Quiz, Bug Hunt, Lückentext, Code-Order und Output-Prediction.
+          Für deine Klassenarbeit: zuerst verstehen (Walkthroughs + Speicher-Trace), dann üben
+          (Quiz, Bugs, Output), dann mischen. Kein Auswendiglernen ohne Modell im Kopf.
         </p>
 
-        <div className="mt-6 grid grid-cols-2 gap-3 md:grid-cols-4">
+        <div className="mt-6 grid grid-cols-2 gap-3 md:grid-cols-5">
           {[
             ["Module", stats.modules],
             ["Übungen", stats.exercises],
-            ["Karteikarten", stats.flashcards],
-            ["Min. Content", stats.minutes]
+            ["Walkthroughs", stats.walkthroughs],
+            ["Karten", stats.flashcards],
+            ["Min.", stats.minutes]
           ].map(([label, value]) => (
             <div key={label} className="rounded-2xl bg-black/30 px-4 py-3 text-center">
               <p className="text-2xl font-bold text-white">{value}</p>
@@ -81,26 +90,71 @@ export function CsharpDojoPage() {
               style={{ width: `${Math.min(100, (levelInfo.intoLevel / levelInfo.needed) * 100)}%` }}
             />
           </div>
-          <p className="mt-2 text-xs text-slate-500">
-            {levelInfo.intoLevel} / {levelInfo.needed} XP bis Level {progress.level + 1}
-          </p>
+        </div>
+      </section>
+
+      <section className="mt-8 rounded-2xl border border-amber-500/30 bg-amber-500/5 p-5">
+        <h2 className="text-2xl font-bold text-white">7-Tage Klassenarbeit-Plan</h2>
+        <p className="mt-2 text-sm text-slate-400">
+          Intensiv von Grund auf. Jeden Tag Module öffnen, Walkthrough machen, Übungen lösen,
+          Checkliste abhaken.
+        </p>
+        <div className="mt-5 grid gap-3 md:grid-cols-2 xl:grid-cols-3">
+          {klassenarbeitPlan.map((day) => (
+            <article
+              key={day.day}
+              className="rounded-2xl border border-slate-800 bg-slate-950/80 p-4"
+            >
+              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-amber-300">
+                Tag {day.day} · {day.minutes} Min
+              </p>
+              <h3 className="mt-2 text-lg font-bold text-white">{day.title}</h3>
+              <p className="mt-1 text-sm text-slate-400">{day.focus}</p>
+              <div className="mt-3 flex flex-wrap gap-2">
+                {day.moduleIds.map((id) => (
+                  <Link
+                    key={id}
+                    to={`/csharp/${id}`}
+                    className="rounded-md bg-slate-900 px-2 py-1 text-[11px] font-semibold text-cyan-300 hover:bg-slate-800"
+                  >
+                    {id.replace("cs-", "")}
+                  </Link>
+                ))}
+              </div>
+              <ul className="mt-3 space-y-1 text-xs text-slate-400">
+                {day.checklist.map((item) => (
+                  <li key={item}>☐ {item}</li>
+                ))}
+              </ul>
+            </article>
+          ))}
         </div>
       </section>
 
       <section className="mt-8">
-        <h2 className="text-2xl font-bold">Lernpfad</h2>
-        <p className="mt-2 text-sm text-slate-400">
-          Der empfohlene Weg von Starter bis Boss-Fight. Jedes Modul enthält Theorie, Merksätze,
-          Code und mehrere Übungsarten.
-        </p>
+        <div className="flex flex-wrap gap-2">
+          {(["klassenarbeit", "von-null", "pruefung", "all"] as PathFilter[]).map((value) => (
+            <button
+              key={value}
+              onClick={() => setPath(value)}
+              className={`rounded-lg px-4 py-2 text-sm font-semibold ${
+                path === value
+                  ? "bg-cyan-400 text-slate-950"
+                  : "bg-slate-900 text-slate-300 hover:bg-slate-800"
+              }`}
+            >
+              {pathLabels[value]}
+            </button>
+          ))}
+        </div>
 
         <div className="mt-5 grid gap-4">
-          {csharpCatalog.map((module) => {
+          {visibleModules.map((module) => {
             const completion = moduleCompletion.find((item) => item.id === module.id);
             return (
               <article
                 key={module.id}
-                className="group rounded-2xl border border-slate-800 bg-slate-900 p-5 shadow-xl transition hover:-translate-y-0.5 hover:border-cyan-500/40"
+                className="rounded-2xl border border-slate-800 bg-slate-900 p-5 shadow-xl transition hover:-translate-y-0.5 hover:border-cyan-500/40"
               >
                 <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
                   <div>
@@ -114,7 +168,12 @@ export function CsharpDojoPage() {
                       <span className="rounded bg-slate-800 px-2 py-1 text-cyan-300">
                         {module.minutes} Min
                       </span>
-                      <span className="rounded bg-slate-800 px-2 py-1 text-emerald-300">
+                      {module.walkthrough && (
+                        <span className="rounded bg-emerald-500/20 px-2 py-1 text-emerald-300">
+                          Walkthrough
+                        </span>
+                      )}
+                      <span className="rounded bg-slate-800 px-2 py-1 text-slate-300">
                         {module.exercises.length} Übungen
                       </span>
                     </div>
@@ -122,7 +181,6 @@ export function CsharpDojoPage() {
                     <p className="mt-2 max-w-3xl text-sm leading-6 text-slate-400">
                       {module.whyItMatters}
                     </p>
-                    <p className="mt-2 text-xs text-slate-500">{module.examFocus}</p>
                   </div>
 
                   <div className="min-w-[180px]">
@@ -142,7 +200,7 @@ export function CsharpDojoPage() {
                       to={`/csharp/${module.id}`}
                       className="mt-4 inline-flex w-full justify-center rounded-xl bg-cyan-400 px-4 py-3 text-sm font-bold text-slate-950 hover:bg-cyan-300"
                     >
-                      Modul öffnen
+                      Lernen & verstehen
                     </Link>
                   </div>
                 </div>

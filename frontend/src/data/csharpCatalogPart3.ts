@@ -3,7 +3,7 @@ import type { CsharpModule } from "./csharpTypes";
 export const csharpCatalogPart3: CsharpModule[] = [
   {
     id: "cs-strings-parse",
-    order: 11,
+    order: 31,
     title: "Strings, Eingaben & Konvertierung",
     level: "Azubi",
     examFocus: "AP2 · Console-Eingaben & Textverarbeitung",
@@ -102,7 +102,7 @@ int b = int.Parse(p[1]);`,
   },
   {
     id: "cs-cheatsheet-exam",
-    order: 12,
+    order: 32,
     title: "Prüfungs-Cheatsheet & Rapid Fire",
     level: "Boss",
     examFocus: "AP2 Rapid Review",

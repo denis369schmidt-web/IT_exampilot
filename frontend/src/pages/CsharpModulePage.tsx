@@ -1,5 +1,6 @@
 import { Link, Navigate, useParams } from "react-router-dom";
 import { useEffect, useMemo, useState } from "react";
+import { CodeWalkthrough } from "../components/csharp/CodeWalkthrough";
 import { ExercisePlayer } from "../components/csharp/ExercisePlayer";
 import { getCsharpModule, csharpLevelColors } from "../data/csharpCatalog";
 import {
@@ -8,7 +9,7 @@ import {
   type GameProgress
 } from "../lib/gameProgress";
 
-type Tab = "theory" | "practice" | "cards" | "pitfalls";
+type Tab = "theory" | "walk" | "practice" | "cards" | "pitfalls";
 
 export function CsharpModulePage() {
   const { moduleId } = useParams();
@@ -92,6 +93,7 @@ export function CsharpModulePage() {
         {(
           [
             ["theory", "Theorie"],
+            ["walk", "Verstehen"],
             ["practice", "Üben"],
             ["cards", "Karteikarten"],
             ["pitfalls", "Fallen"]
@@ -153,12 +155,38 @@ export function CsharpModulePage() {
             ))}
           </div>
 
-          <button
-            onClick={() => setTab("practice")}
-            className="rounded-xl bg-cyan-400 px-5 py-3 text-sm font-bold text-slate-950 hover:bg-cyan-300"
-          >
-            Jetzt interaktiv üben →
-          </button>
+          <div className="flex flex-wrap gap-3">
+            {module.walkthrough && (
+              <button
+                onClick={() => setTab("walk")}
+                className="rounded-xl bg-slate-100 px-5 py-3 text-sm font-bold text-slate-950 hover:bg-white"
+              >
+                Schritt-für-Schritt verstehen →
+              </button>
+            )}
+            <button
+              onClick={() => setTab("practice")}
+              className="rounded-xl bg-cyan-400 px-5 py-3 text-sm font-bold text-slate-950 hover:bg-cyan-300"
+            >
+              Jetzt interaktiv üben →
+            </button>
+          </div>
+        </section>
+      )}
+
+      {tab === "walk" && (
+        <section className="mt-6">
+          {module.walkthrough ? (
+            <CodeWalkthrough
+              title={module.walkthrough.title}
+              code={module.walkthrough.code}
+              steps={module.walkthrough.steps}
+            />
+          ) : (
+            <div className="rounded-2xl border border-slate-800 bg-slate-900 p-5 text-sm text-slate-400">
+              Für dieses Modul gibt es noch keinen Walkthrough. Nutze Theorie + Trace-Übungen.
+            </div>
+          )}
         </section>
       )}
 

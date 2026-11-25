@@ -3,7 +3,7 @@ import type { CsharpModule } from "./csharpTypes";
 export const csharpCatalogPart1: CsharpModule[] = [
   {
     id: "cs-basics-types",
-    order: 1,
+    order: 21,
     title: "Datentypen, Variablen & Operatoren",
     level: "Starter",
     examFocus: "AP2 Algorithmen · Grundlagen",
@@ -125,7 +125,7 @@ Console.WriteLine(schnitt);`,
   },
   {
     id: "cs-control-flow",
-    order: 2,
+    order: 22,
     title: "Kontrollstrukturen: if, switch, Schleifen",
     level: "Starter",
     examFocus: "AP2 Algorithmen · Ablaufsteuerung",
@@ -267,7 +267,7 @@ ______ (string name in namen)
   },
   {
     id: "cs-methods",
-    order: 3,
+    order: 23,
     title: "Methoden, Parameter & Rückgaben",
     level: "Azubi",
     examFocus: "AP2 · Zerlegung von Problemen",
@@ -373,7 +373,7 @@ Console.WriteLine(Doppelt(4));`,
   },
   {
     id: "cs-arrays-collections",
-    order: 4,
+    order: 24,
     title: "Arrays, List, Dictionary, Stack & Queue",
     level: "Azubi",
     examFocus: "AP2 · Datenstrukturen",

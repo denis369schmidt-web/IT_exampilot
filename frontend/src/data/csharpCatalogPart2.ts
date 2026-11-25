@@ -3,7 +3,7 @@ import type { CsharpModule } from "./csharpTypes";
 export const csharpCatalogPart2: CsharpModule[] = [
   {
     id: "cs-oop-basics",
-    order: 5,
+    order: 25,
     title: "OOP: Klassen, Properties, Konstruktoren",
     level: "Azubi",
     examFocus: "AP2 · Objektorientierung",
@@ -115,7 +115,7 @@ export const csharpCatalogPart2: CsharpModule[] = [
   },
   {
     id: "cs-oop-inheritance",
-    order: 6,
+    order: 26,
     title: "Vererbung, Polymorphie, abstract & interface",
     level: "Prüfungsnah",
     examFocus: "AP2 · OOP Vertiefung",
@@ -242,7 +242,7 @@ class Kind : Basis
   },
   {
     id: "cs-exceptions",
-    order: 7,
+    order: 27,
     title: "Exceptions & robuste Eingaben",
     level: "Prüfungsnah",
     examFocus: "AP2 · Fehlerbehandlung",
@@ -356,7 +356,7 @@ catch (FormatException)
   },
   {
     id: "cs-algorithms",
-    order: 8,
+    order: 28,
     title: "Algorithmen: Suche, Min/Max, Filtern, Zählen",
     level: "Prüfungsnah",
     examFocus: "AP2 · Entwicklung und Umsetzung von Algorithmen",
@@ -499,7 +499,7 @@ Console.WriteLine(max);`,
   },
   {
     id: "cs-linq-basics",
-    order: 9,
+    order: 29,
     title: "LINQ-Grundlagen (Pluspunkt)",
     level: "Azubi",
     examFocus: "Projektarbeit & modernes C# · in AP oft optional",
@@ -576,7 +576,7 @@ Console.WriteLine(c);`,
   },
   {
     id: "cs-exam-boss",
-    order: 10,
+    order: 30,
     title: "Boss-Fight: IHK Artikelverwaltung",
     level: "Boss",
     examFocus: "AP2 Simulation · Klassen + List + Suche + Exceptions",

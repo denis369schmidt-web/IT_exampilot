@@ -1,11 +1,14 @@
 export type CsharpLevel = "Starter" | "Azubi" | "Prüfungsnah" | "Boss";
 
+export type CsharpPath = "von-null" | "klassenarbeit" | "pruefung";
+
 export type ExerciseKind =
   | "multipleChoice"
   | "fillBlank"
   | "spotBug"
   | "orderCode"
-  | "predictOutput";
+  | "predictOutput"
+  | "traceState";
 
 export interface MultipleChoiceExercise {
   id: string;
@@ -59,16 +62,36 @@ export interface PredictOutputExercise {
   xp: number;
 }
 
+export interface TraceStateExercise {
+  id: string;
+  kind: "traceState";
+  prompt: string;
+  code: string;
+  question: string;
+  options: string[];
+  correctIndex: number;
+  explanation: string;
+  xp: number;
+}
+
 export type CsharpExercise =
   | MultipleChoiceExercise
   | FillBlankExercise
   | SpotBugExercise
   | OrderCodeExercise
-  | PredictOutputExercise;
+  | PredictOutputExercise
+  | TraceStateExercise;
 
 export interface CsharpFlashcard {
   front: string;
   back: string;
+}
+
+export interface WalkthroughStep {
+  line: number;
+  title: string;
+  explain: string;
+  memory?: string;
 }
 
 export interface CsharpModule {
@@ -76,6 +99,7 @@ export interface CsharpModule {
   order: number;
   title: string;
   level: CsharpLevel;
+  path?: CsharpPath[];
   examFocus: string;
   whyItMatters: string;
   minutes: number;
@@ -83,6 +107,11 @@ export interface CsharpModule {
   theory: string[];
   remember: string[];
   codeExamples: Array<{ title: string; code: string; note: string }>;
+  walkthrough?: {
+    title: string;
+    code: string;
+    steps: WalkthroughStep[];
+  };
   pitfalls: string[];
   flashcards: CsharpFlashcard[];
   exercises: CsharpExercise[];
