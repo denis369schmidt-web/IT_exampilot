@@ -113,9 +113,31 @@ export function CsharpModulePage() {
 
       {tab === "theory" && (
         <section className="mt-6 grid gap-5">
+          {module.analogy && (
+            <article className="rounded-2xl border border-amber-500/30 bg-amber-500/10 p-5 animate-fade-up">
+              <p className="text-xs font-semibold uppercase tracking-[0.25em] text-amber-300">
+                Lehrer · Bild im Kopf
+              </p>
+              <p className="mt-3 text-base leading-7 text-amber-50">{module.analogy}</p>
+            </article>
+          )}
+
+          {module.teacherTalk && module.teacherTalk.length > 0 && (
+            <article className="rounded-2xl border border-sky-500/30 bg-sky-500/10 p-5">
+              <p className="text-xs font-semibold uppercase tracking-[0.25em] text-sky-300">
+                Lehrer erklärt
+              </p>
+              <div className="mt-4 space-y-4 text-sm leading-7 text-sky-50">
+                {module.teacherTalk.map((item) => (
+                  <p key={item}>{item}</p>
+                ))}
+              </div>
+            </article>
+          )}
+
           <div className="grid gap-5 lg:grid-cols-2">
             <article className="rounded-2xl border border-slate-800 bg-slate-900 p-5">
-              <h2 className="text-xl font-bold">Erklärung</h2>
+              <h2 className="text-xl font-bold">Sachlich auf den Punkt</h2>
               <div className="mt-4 space-y-4 text-sm leading-7 text-slate-300">
                 {module.theory.map((item) => (
                   <p key={item}>{item}</p>
@@ -139,6 +161,32 @@ export function CsharpModulePage() {
               </ul>
             </article>
           </div>
+
+          {module.proTips && module.proTips.length > 0 && (
+            <article className="rounded-2xl border border-emerald-500/30 bg-emerald-500/10 p-5">
+              <p className="text-xs font-semibold uppercase tracking-[0.25em] text-emerald-300">
+                Profi-Coder Tipps
+              </p>
+              <ul className="mt-4 space-y-3 text-sm leading-7 text-emerald-50">
+                {module.proTips.map((item) => (
+                  <li key={item}>▸ {item}</li>
+                ))}
+              </ul>
+            </article>
+          )}
+
+          {module.checkUnderstanding && module.checkUnderstanding.length > 0 && (
+            <article className="rounded-2xl border border-violet-500/30 bg-violet-500/10 p-5">
+              <p className="text-xs font-semibold uppercase tracking-[0.25em] text-violet-300">
+                Verstehst du es? — laut beantworten
+              </p>
+              <ol className="mt-4 list-decimal space-y-3 pl-5 text-sm leading-7 text-violet-50">
+                {module.checkUnderstanding.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ol>
+            </article>
+          )}
 
           <div className="grid gap-5">
             {module.codeExamples.map((example) => (

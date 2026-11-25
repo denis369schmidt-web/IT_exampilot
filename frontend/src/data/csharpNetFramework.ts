@@ -1,9 +1,8 @@
 import type { CsharpModule } from "./csharpTypes";
 
 /**
- * .NET Framework Fokus für die erste Klassenarbeit:
- * Visual Studio, klassische Program/Main-Struktur, Console, WinForms.
- * Keine Top-Level-Statements, kein modernes SDK-only .NET.
+ * .NET Framework – erklärt wie vom Lehrer, geschärft wie vom Profi.
+ * Ziel: Du verstehst nicht nur WAS, sondern WARUM.
  */
 export const csharpNetFramework: CsharpModule[] = [
   {
@@ -14,130 +13,153 @@ export const csharpNetFramework: CsharpModule[] = [
     path: ["netfx", "klassenarbeit", "von-null"],
     examFocus: "1. Klassenarbeit · .NET Framework",
     whyItMatters:
-      "In der Schule startest du fast immer mit Visual Studio und einem .NET-Framework-Projekt. Wer Solution, Projekt und Program.cs verwechselt, verliert Zeit, bevor der erste Code läuft.",
-    minutes: 25,
+      "Bevor Code zählt, musst du die Werkstatt kennen. In der KA verlierst du sonst Minuten nur beim Anlegen/Öffnen des Projekts.",
+    minutes: 30,
+    analogy:
+      "Stell dir Visual Studio als Werkstatt vor: Die Solution ist das Gebäude, das Projekt ist ein Raum, Program.cs ist die Werkbank, auf der du arbeitest.",
     goals: [
-      "Solution (.sln) vs Projekt (.csproj) unterscheiden",
-      "Richtige Vorlage wählen: Konsolen-App (.NET Framework) oder Windows Forms (.NET Framework)",
-      "Program.cs / Form1.cs im Solution Explorer finden",
-      "Build (Kompilieren) vs Start (F5) erklären"
+      "Solution (.sln) und Projekt (.csproj) sicher unterscheiden",
+      "Die richtige Vorlage „(.NET Framework)“ wählen",
+      "Program.cs / Form1.cs finden",
+      "Build vs Start (F5) erklären"
+    ],
+    teacherTalk: [
+      "Hallo — wir starten ganz langsam. Du musst nicht alles auf einmal können. Heute nur: Wo liegt mein Code, und wie starte ich ihn?",
+      "Wenn du in Visual Studio „Neues Projekt“ wählst, suchst du bewusst den Zusatz (.NET Framework). Das ist wie die richtige Schulbuch-Ausgabe — nicht die moderne Parallel-Ausgabe.",
+      "Solution = Mappe. Projekt = Heft in der Mappe. Datei Program.cs = eine Seite mit dem Startcode. Wenn jemand sagt „öffne dein Projekt“, meint er meist den Ordner mit dem Code, nicht die .sln allein.",
+      "F5 heißt: Bitte bauen UND ausführen. Wenn es kracht, schaust du zuerst in die Fehlerliste — Zeile und Datei stehen dort. Das ist dein Freund, kein Feind."
+    ],
+    proTips: [
+      "Profi-Angewohnheit: Projektmappe immer so benennen, dass du in 3 Monaten noch weißt, worum es ging (KA1_Console, KA1_WinForms).",
+      "Ein Projekt, ein Startpunkt. Wenn mehrere Projekte in einer Solution sind, prüfe „Startprojekt“ (rechtsklick → Als Startprojekt festlegen).",
+      "Bevor du wild änderst: einmal Strg+Umschalt+B (nur Build). So siehst du Compilerfehler ohne das Konsolenfenster-Chaos."
+    ],
+    checkUnderstanding: [
+      "Was ist der Unterschied zwischen Solution und Projekt?",
+      "Woran erkennst du die .NET-Framework-Vorlage?",
+      "Was passiert genau, wenn du F5 drückst?"
     ],
     theory: [
-      "Eine Solution ist der Ordnerrahmen für ein oder mehrere Projekte. Dateiendung: `.sln`.",
-      "Ein Projekt enthält deinen Code und Einstellungen (Ziel-Framework, Ausgabetyp). Unter .NET Framework oft `.csproj` mit TargetFrameworkVersion wie v4.7.2 / v4.8.",
-      "Wichtige Vorlagen in Visual Studio: „Konsolen-App (.NET Framework)“ und „Windows Forms-App (.NET Framework)“. Nicht die modernen „.NET“-Vorlagen ohne „Framework“ verwechseln, wenn die Schule Framework verlangt.",
-      "F5 startet mit Debugger. Strg+Umschalt+B baut nur. Fehlerfenster „Fehlerliste“ zeigt Compilerfehler mit Datei und Zeile.",
-      "Ausgabe landet bei Console-Apps im Konsolenfenster, bei WinForms in einem Fenster (Form)."
+      "Eine Solution (`.sln`) ist der äußere Rahmen. Darin können ein oder mehrere Projekte liegen.",
+      "Ein Projekt enthält Quellcode und Einstellungen — unter .NET Framework oft TargetFrameworkVersion 4.7.2/4.8.",
+      "Schul-Vorlagen: „Konsolen-App (.NET Framework)“ und „Windows Forms-App (.NET Framework)“.",
+      "F5 = Build + Start mit Debugger. Fehlerliste zeigt Datei, Zeile, Meldung.",
+      "Console gibt Text in ein schwarzes Fenster aus; WinForms öffnet ein Formular-Fenster."
     ],
     remember: [
       "Framework-Vorlage = oft „(.NET Framework)“ im Namen.",
-      "Solution enthält Projekte, Projekt enthält .cs-Dateien.",
+      "Solution enthält Projekte → Projekt enthält .cs-Dateien.",
       "Erst Fehlerliste lesen, dann raten."
     ],
     codeExamples: [
       {
-        title: "Was du im Solution Explorer siehst",
-        code: `MeineSolution.sln
- └─ MeinProjekt (Console oder WinForms)
-     ├─ Program.cs      // Einstieg bei Console
-     ├─ Form1.cs       // Fenster-Logik bei WinForms
-     ├─ Form1.Designer.cs
-     └─ Properties / References`,
-        note: "References zeigen, welche Bibliotheken (Assemblies) eingebunden sind — z. B. System, System.Windows.Forms."
+        title: "Landkarte im Solution Explorer",
+        code: `MeineSolution.sln                 ← die Mappe
+ └─ MeinProjekt                  ← das Heft
+     ├─ Program.cs               ← Start bei Console
+     ├─ Form1.cs                 ← Logik bei WinForms
+     ├─ Form1.Designer.cs        ← vom Designer erzeugt
+     └─ References               ← Bibliotheken (System, ...)`,
+        note: "Lehrer: Wenn du eine Datei nicht findest, klappe im Solution Explorer alles auf — oft ist Form1 zugeklappt."
       }
     ],
     walkthrough: {
       title: "Vom Doppelklick bis zur Ausgabe",
       code: `// 1 Visual Studio starten
 // 2 Neues Projekt: Konsolen-App (.NET Framework)
-// 3 In Main schreiben: Console.WriteLine("Hallo");
-// 4 F5 drücken
+// 3 In Main: Console.WriteLine("Hallo");
+// 4 F5
 // 5 Konsole zeigt: Hallo`,
       steps: [
         {
           line: 1,
-          title: "IDE öffnen",
-          explain: "Visual Studio ist die Werkstatt. Ohne Projekt gibt es nichts zum Starten.",
+          title: "Werkstatt öffnen",
+          explain:
+            "Lehrer: Ohne geöffnete IDE hast du keinen Compiler zur Hand. Profi: Gleiche IDE wie in der Prüfungsumgebung nutzen, wenn möglich.",
           memory: "IDE bereit"
         },
         {
           line: 2,
-          title: "Framework-Vorlage",
-          explain: "Du wählst bewusst .NET Framework, weil die Klassenarbeit das verlangt.",
+          title: "Richtige Vorlage",
+          explain:
+            "Lehrer: Lies den Vorlagennamen laut. Steht Framework drin? Gut. Profi: Falsches Target kostet später Referenzen/APIs.",
           memory: "Projekt = Console .NET Framework"
         },
         {
           line: 3,
-          title: "Code in Main",
-          explain: "Der Einstiegspunkt Main wird ausgeführt, sobald das Programm startet.",
-          memory: "Anweisung: WriteLine"
+          title: "Erste Anweisung",
+          explain:
+            "Lehrer: Alles, was beim Start passieren soll, liegt (am Anfang) in Main. Eine Zeile reicht zum Beweis.",
+          memory: "WriteLine bereit"
         },
         {
           line: 4,
           title: "Start",
-          explain: "Compiler baut, Runtime startet, Main läuft.",
-          memory: "Prozess gestartet"
+          explain:
+            "Lehrer: Jetzt übersetzt der Compiler und startet. Wenn rot in der Fehlerliste: stopp, lesen, fixen.",
+          memory: "Build + Run"
         },
         {
           line: 5,
-          title: "Ergebnis",
-          explain: "Die Konsole zeigt die Ausgabe — Beweis, dass der Ablauf stimmt.",
-          memory: "Ausgabe: Hallo"
+          title: "Beweis",
+          explain: "Lehrer: Siehst du „Hallo“, hast du den kompletten Weg verstanden.",
+          memory: "Ausgabe ok"
         }
       ]
     },
     pitfalls: [
-      "Moderne .NET-Vorlage statt .NET Framework gewählt",
-      "Falsches Startprojekt in der Solution",
-      "Compilerfehler ignorieren und immer wieder F5 hämmern"
+      "Moderne .NET-Vorlage statt .NET Framework",
+      "Falsches Startprojekt",
+      "Fehlerliste ignorieren"
     ],
     flashcards: [
       {
-        front: "Was ist eine Solution?",
-        back: "Der Rahmen (.sln), der ein oder mehrere Projekte zusammenhält."
+        front: "Solution vs Projekt?",
+        back: "Solution = Mappe (.sln). Projekt = Heft mit Code (.csproj + .cs)."
       },
       {
-        front: "Woran erkennst du die Schul-Vorlage?",
-        back: "Oft am Zusatz „(.NET Framework)“ im Vorlagennamen."
+        front: "Woran erkenne ich Framework-Vorlagen?",
+        back: "Am Zusatz „(.NET Framework)“."
       },
       {
         front: "Was macht F5?",
-        back: "Baut und startet das Programm mit Debugger."
+        back: "Baut und startet mit Debugger."
       }
     ],
     exercises: [
       {
         id: "netfx-vs-mc-1",
         kind: "multipleChoice",
-        prompt: "Was gehört typischerweise zur .NET-Framework-Klassenarbeit in VS?",
+        prompt: "Lehrer fragt: Welche Vorlage passt zur Framework-KA?",
         options: [
-          "Nur dateibasierte Top-Level-Apps ohne Projekt",
-          "Projektvorlage Konsolen-App oder WinForms (.NET Framework)",
-          "Nur Blazor WebAssembly",
-          "Nur Python Notebooks"
+          "Nur dateibasierte Top-Level-App",
+          "Konsolen-App oder WinForms (.NET Framework)",
+          "Nur Blazor",
+          "Nur Python"
         ],
         correctIndex: 1,
-        explanation: "Schulen starten mit Framework-Console oder WinForms in Visual Studio.",
+        explanation:
+          "Lehrer: Genau. Profi: Die Vorlage bestimmt Runtime und verfügbare Assemblies.",
         xp: 15
       },
       {
         id: "netfx-vs-mc-2",
         kind: "multipleChoice",
-        prompt: "Unterschied Solution vs Projekt?",
+        prompt: "Was ist richtig?",
         options: [
-          "Dasselbe",
-          "Solution kann mehrere Projekte enthalten; Projekt enthält den Code",
-          "Projekt enthält Solutions",
-          "Solution ist nur das .exe"
+          "Solution und Projekt sind dasselbe",
+          "Solution kann Projekte enthalten; Projekte enthalten Code",
+          "Projekte enthalten Solutions",
+          "Solution ist die .exe"
         ],
         correctIndex: 1,
-        explanation: "Solution = Container, Projekt = Bau-Einheit mit Code.",
+        explanation: "Mappe → Hefte → Seiten.",
         xp: 15
       },
       {
         id: "netfx-vs-order-1",
         kind: "orderCode",
-        prompt: "Ordne den Startweg.",
+        prompt: "Ordne den Weg wie in der Stunde.",
         lines: [
           "Visual Studio öffnen",
           "Neues Projekt (.NET Framework) anlegen",
@@ -145,7 +167,7 @@ export const csharpNetFramework: CsharpModule[] = [
           "F5 starten und Ergebnis prüfen"
         ],
         correctOrder: [0, 1, 2, 3],
-        explanation: "Werkzeug → Projekt → Code → Test.",
+        explanation: "Werkstatt → Projekt → Code → Test.",
         xp: 20
       },
       {
@@ -154,7 +176,7 @@ export const csharpNetFramework: CsharpModule[] = [
         prompt: "Dateiendung der Solution?",
         code: `MeineApp.____`,
         blanks: [{ id: "b1", answer: "sln" }],
-        explanation: ".sln = Solution-Datei.",
+        explanation: ".sln = Solution.",
         xp: 10
       }
     ],
@@ -166,38 +188,57 @@ export const csharpNetFramework: CsharpModule[] = [
     title: "Klassisches C#-Gerüst: using, namespace, Main",
     level: "Starter",
     path: ["netfx", "klassenarbeit", "von-null"],
-    examFocus: "1. Klassenarbeit · Programmstruktur .NET Framework",
+    examFocus: "1. Klassenarbeit · Programmstruktur",
     whyItMatters:
-      "Unter .NET Framework schreibst du kein modernes Top-Level-C#. Du brauchst das klassische Gerüst mit namespace, class Program und static void Main.",
-    minutes: 30,
+      "Unter .NET Framework ist dieses Gerüst Pflicht. Verstehst du jede Klammer, kannst du jede Aufgabe „einhängen“.",
+    minutes: 35,
+    analogy:
+      "Stell dir ein Theaterstück vor: `using` bringt Requisiten auf die Bühne, `namespace` ist das Stück, `class Program` die Bühne, `Main` ist die erste Szene, die der Regisseur (Runtime) startet.",
     goals: [
       "using, namespace, class, Main Zeile für Zeile erklären",
       "Warum Main der Einstieg ist",
-      "string[] args grob einordnen",
-      "Eigenes Minimalprogramm aufbauen können"
+      "static und void in eigenen Worten sagen",
+      "Ein Minimalprogramm selbst aufbauen"
+    ],
+    teacherTalk: [
+      "Lies mit mir laut: using System — „Ich möchte Werkzeuge aus dem Kasten System benutzen, vor allem Console.“",
+      "namespace ist die Adresse deines Codes. class Program ist das Gebäude. Main ist die Haustür, durch die das Programm betritt.",
+      "static void Main bedeutet: Die Runtime darf Main starten, ohne vorher `new Program()` zu machen. static = gehört zur Klasse selbst.",
+      "void heißt: Main gibt keinen Wert zurück — es *tut* etwas (ausgeben, rechnen), statt ein Ergebnis wie eine Mathefunktion zu liefern.",
+      "Wenn in der KA Code „nirgends hingehört“, fehlt meist die Main-Methode oder eine geschweifte Klammer. Zähle deine `{` und `}`."
+    ],
+    proTips: [
+      "Profi: Ein Einstiegspunkt pro App. Zusätzliche Logik → eigene Methoden, die Main aufruft.",
+      "Profi: `string[] args` erst nutzen, wenn du Kommandozeile brauchst — für die 1. KA oft ignorierbar, aber stehen lassen.",
+      "Profi: Nie `void Main` ohne static — der Compiler sucht genau die static-Signatur als Einstieg."
+    ],
+    checkUnderstanding: [
+      "Warum braucht Main das Wort static?",
+      "Was passiert, wenn du Console ohne using System schreibst?",
+      "Wo darf ausführbarer Startcode in der Framework-KA stehen?"
     ],
     theory: [
-      "`using System;` importiert den Namensraum System, damit du `Console` statt `System.Console` schreiben kannst.",
-      "`namespace MeinProjekt { ... }` gruppiert deinen Code. In Framework-Vorlagen steht oft ein Projektname als Namespace.",
-      "`class Program` ist die Klasse, die den Einstieg enthält. C# ist klassenbasiert — auch Console-Apps leben in Klassen.",
-      "`static void Main(string[] args)` ist der Einstiegspunkt. `static` = ohne Objektaufruf startbar. `void` = kein Rückgabewert. `args` = optionale Kommandozeilenargumente.",
-      "Alles, was beim Start passieren soll, steht (am Anfang) in Main — später ausgelagert in Methoden/Klassen."
+      "`using System;` importiert Namensräume, damit `Console` kurz geschrieben werden kann.",
+      "`namespace ... { }` gruppiert Klassen.",
+      "`class Program` enthält den Einstieg.",
+      "`static void Main(string[] args)` ist der Einstiegspunkt der Anwendung.",
+      "Beim Start springt die Runtime in Main und führt Anweisungen der Reihe nach aus."
     ],
     remember: [
-      "Kein Top-Level in der Framework-KA: immer Main.",
+      "Framework-KA: immer klassisches Main.",
       "using = Abkürzung für Namensräume.",
-      "Main ohne static startet nicht als Einstieg."
+      "Main ohne static startet nicht."
     ],
     codeExamples: [
       {
-        title: "Klassisches Framework-Gerüst",
-        code: `using System;
+        title: "Das Gerüst — mit Lehrerkommentar",
+        code: `using System;                    // Requisiten: Console usw.
 
-namespace Klassenarbeit1
+namespace Klassenarbeit1         // Adresse / Ordner im Code
 {
-    class Program
+    class Program                // Bühne
     {
-        static void Main(string[] args)
+        static void Main(string[] args)  // erste Szene / Haustür
         {
             Console.WriteLine("Hallo .NET Framework");
             Console.Write("Name: ");
@@ -206,7 +247,7 @@ namespace Klassenarbeit1
         }
     }
 }`,
-        note: "Genau so sehen Schulvorlagen unter .NET Framework aus."
+        note: "Lehrer: Decke die Kommentare später weg — aber behalte das Bild Bühne/Tür im Kopf."
       }
     ],
     walkthrough: {
@@ -226,53 +267,44 @@ namespace Demo
         {
           line: 1,
           title: "using",
-          explain: "System-Typen wie Console werden kurz ansprechbar.",
-          memory: "Import: System"
+          explain: "Lehrer: Wir holen Console in Reichweite. Profi: Unbenutzte usings später aufräumen.",
+          memory: "Import System"
         },
         {
           line: 2,
           title: "namespace",
-          explain: "Organisationsbox für Klassen des Projekts.",
+          explain: "Lehrer: Das ist die Postadresse deiner Klassen.",
           memory: "Namespace Demo"
         },
         {
           line: 4,
-          title: "class Program",
-          explain: "Bauplan der Startklasse.",
+          title: "class",
+          explain: "Lehrer: C# steckt Verhalten in Klassen — auch bei Console-Apps.",
           memory: "Klasse Program"
         },
         {
           line: 6,
           title: "Main",
-          explain: "Runtime sucht Main und startet hier.",
+          explain: "Lehrer: Hier klingelt die Runtime. Profi: Halte Main schlank.",
           memory: "Einstieg"
         },
         {
           line: 8,
           title: "Anweisung",
-          explain: "Erste sichtbare Aktion: Text ausgeben.",
+          explain: "Lehrer: Erste sichtbare Tat — Text ausgeben.",
           memory: "Ausgabe Go"
         }
       ]
     },
     pitfalls: [
-      "Main falsch geschrieben (main klein, oder ohne static)",
-      "using vergessen und dann Console nicht gefunden",
-      "Code außerhalb von Main/Methoden „frei“ hingeschrieben (Framework-Stil)"
+      "main klein geschrieben",
+      "static vergessen",
+      "Code außerhalb von Methoden"
     ],
     flashcards: [
-      {
-        front: "Was ist Main?",
-        back: "Der Einstiegspunkt des Programms."
-      },
-      {
-        front: "Wozu using System?",
-        back: "Damit Klassen aus System (z. B. Console) kurz nutzbar sind."
-      },
-      {
-        front: "Warum static bei Main?",
-        back: "Damit Main ohne Objektinstanz gestartet werden kann."
-      }
+      { front: "Was ist Main?", back: "Der Einstiegspunkt — die Haustür des Programms." },
+      { front: "Wozu using System?", back: "Damit Console & Co. kurz nutzbar sind." },
+      { front: "Warum static?", back: "Damit Main ohne Objekt gestartet werden kann." }
     ],
     exercises: [
       {
@@ -286,7 +318,7 @@ namespace Demo
           "async Task Run()"
         ],
         correctIndex: 1,
-        explanation: "static void Main(string[] args) ist der Standard-Einstieg.",
+        explanation: "Lehrer: Auswendig können. Profi: Das erwartet Host/Runtime.",
         xp: 15
       },
       {
@@ -313,7 +345,7 @@ namespace Demo
       {
         id: "netfx-main-fill-1",
         kind: "fillBlank",
-        prompt: "Einstiegsmethode vervollständigen.",
+        prompt: "Einstiegsmethode.",
         code: `static void ____(string[] args)
 {
     Console.WriteLine("Start");
@@ -325,7 +357,7 @@ namespace Demo
       {
         id: "netfx-main-bug-1",
         kind: "spotBug",
-        prompt: "Warum startet das nicht als Einstieg?",
+        prompt: "Lehrer: Warum startet das nicht?",
         code: `class Program
 {
     void Main(string[] args)
@@ -335,23 +367,23 @@ namespace Demo
 }`,
         buggyLine: 3,
         fix: "static void Main(string[] args)",
-        explanation: "Ohne static ist Main kein gültiger Einstiegspunkt.",
+        explanation: "Ohne static kein Einstiegspunkt.",
         xp: 25
       },
       {
         id: "netfx-main-trace-1",
         kind: "traceState",
-        prompt: "Ablauf verstehen.",
+        prompt: "Was kommt raus?",
         code: `static void Main(string[] args)
 {
     int x = 1;
     x = x + 2;
     Console.WriteLine(x);
 }`,
-        question: "Was wird ausgegeben?",
+        question: "Ausgabe?",
         options: ["1", "2", "3", "x"],
         correctIndex: 2,
-        explanation: "1+2=3 wird ausgegeben.",
+        explanation: "1+2=3. Lehrer: Sag den Speicher laut: x war 1, jetzt 3.",
         xp: 15
       }
     ]
@@ -359,33 +391,52 @@ namespace Demo
   {
     id: "netfx-console-io",
     order: 3,
-    title: "Konsole unter .NET Framework: Ein- und Ausgabe",
+    title: "Konsole: Ein- und Ausgabe wirklich verstehen",
     level: "Starter",
     path: ["netfx", "klassenarbeit"],
     examFocus: "1. Klassenarbeit · Console",
     whyItMatters:
-      "Viele erste Aufgaben sind reine Console-Apps: Eingabe lesen, rechnen, ausgeben. ReadLine liefert string — Parsen ist Pflicht.",
-    minutes: 30,
+      "Fast jede erste Aufgabe: etwas fragen, Zahl machen, rechnen, antworten. Wer ReadLine/Parse nicht versteht, scheitert früh.",
+    minutes: 35,
+    analogy:
+      "Die Konsole ist ein Briefwechsel: Write/WriteLine = du schreibst einen Zettel, ReadLine = du liest die Antwort des Users — immer als Text, nie „automatisch als Zahl“.",
     goals: [
-      "Write vs WriteLine sicher nutzen",
-      "ReadLine → string → Parse nach int/double",
-      "int.TryParse in Framework-Projekten einsetzen",
-      "Einfache Dialoge in der Konsole bauen"
+      "Write vs WriteLine erklären",
+      "ReadLine → string → Parse nachvollziehen",
+      "TryParse als Sicherheitsnetz nutzen",
+      "Verkettungsfalle \"Summe: \" + a + b vermeiden"
+    ],
+    teacherTalk: [
+      "Ganz wichtig: Der Computer sieht Tastatureingaben zuerst als Text. Auch wenn du 42 tippst, kommt `ReadLine` den Text \"42\".",
+      "Parse heißt übersetzen: Aus Text \"42\" wird die Zahl 42. Wenn jemand \"hallo\" tippt, kann Parse nicht übersetzen → Fehler.",
+      "TryParse ist höflich: Es fragt „Geht das?“ und antwortet true/false, statt das Programm umzuwerfen.",
+      "Schreibe Aufforderungen mit Write (Cursor bleibt in der Zeile). Ergebnisse mit WriteLine.",
+      "Merksatz: \"Summe: \" + a + b ist Textbaukasten. \"Summe: \" + (a + b) rechnet zuerst."
+    ],
+    proTips: [
+      "Profi: Für Schule oft Parse ok, wenn die Aufgabe gültige Zahlen garantiert — trotzdem TryParse können.",
+      "Profi: Klammern um Rechnungen in Strings setzen: immer `(a + b)`.",
+      "Profi: Eingaben trimmen (`eingabe.Trim()`), wenn Leerzeichen stören."
+    ],
+    checkUnderstanding: [
+      "Warum ist ReadLine immer string?",
+      "Wann wirft int.Parse eine Exception?",
+      "Warum schreibt man (a + b) in die Ausgabe?"
     ],
     theory: [
-      "`Console.WriteLine(text)` gibt aus und springt in die nächste Zeile. `Write` bleibt in der Zeile — gut für Eingabeaufforderungen.",
-      "`Console.ReadLine()` liest eine Zeile als `string` (kann null sein). In Schulcode oft direkt in `string eingabe = Console.ReadLine();`.",
-      "Zahlen brauchst du per `int.Parse(eingabe)` oder sicherer `int.TryParse(eingabe, out int zahl)`.",
-      "Verketten: `\"Summe: \" + summe` oder ab C# 6 auch `$\"Summe: {summe}\"` — je nach Compiler/Sprachversion der Schule. Framework 4.x mit VS unterstützt Interpolation ab C# 6."
+      "`Console.WriteLine` gibt aus und macht Zeilenumbruch; `Write` nicht.",
+      "`Console.ReadLine()` liefert string.",
+      "`int.Parse` / `int.TryParse` wandeln Text in Zahlen.",
+      "Operator `+` zwischen string und Zahl verkettet, statt zu addieren — außer die Rechnung steht in Klammern."
     ],
     remember: [
-      "ReadLine = immer Text zuerst.",
-      "Parse kann knallen — TryParse ist robuster.",
-      "Aufforderung mit Write, Ergebnis mit WriteLine."
+      "ReadLine = Text.",
+      "Parse übersetzt; TryParse prüft zuerst.",
+      "Rechnung in Klammern: (a + b)."
     ],
     codeExamples: [
       {
-        title: "Klassische Eingabe/Verarbeitung",
+        title: "Klassiker — Lehrer führt dich durch",
         code: `using System;
 
 namespace Klassenarbeit1
@@ -394,18 +445,18 @@ namespace Klassenarbeit1
     {
         static void Main(string[] args)
         {
-            Console.Write("Zahl 1: ");
-            int a = int.Parse(Console.ReadLine());
+            Console.Write("Zahl 1: ");              // Aufforderung
+            int a = int.Parse(Console.ReadLine()); // Text → Zahl
             Console.Write("Zahl 2: ");
             int b = int.Parse(Console.ReadLine());
-            Console.WriteLine("Summe: " + (a + b));
+            Console.WriteLine("Summe: " + (a + b)); // erst rechnen!
         }
     }
 }`,
-        note: "Sehr typische erste KA-Aufgabe."
+        note: "Lehrer: Führe das mit 3 und 4 aus. Erwarte 7 — nicht 34."
       },
       {
-        title: "Sicherer mit TryParse",
+        title: "Sicherheitsnetz TryParse",
         code: `Console.Write("Alter: ");
 string eingabe = Console.ReadLine();
 int alter;
@@ -417,7 +468,7 @@ else
 {
     Console.WriteLine("Keine gültige Zahl");
 }`,
-        note: "Zeigt Verständnis und Robustheit — Pluspunkte."
+        note: "Profi: out alter bekommt den Wert nur bei Erfolg."
       }
     ],
     walkthrough: {
@@ -428,33 +479,53 @@ Console.Write("b: ");
 int b = int.Parse(Console.ReadLine());
 Console.WriteLine(a + b);`,
       steps: [
-        { line: 1, title: "Prompt", explain: "User sieht die Aufforderung.", memory: "Warte auf Eingabe" },
-        { line: 2, title: "Lesen+Parsen", explain: "Text wird zu int a.", memory: "a gesetzt" },
-        { line: 3, title: "Prompt 2", explain: "Zweite Aufforderung.", memory: "warte b" },
-        { line: 4, title: "b setzen", explain: "Zweiten Wert parsen.", memory: "a,b gesetzt" },
-        { line: 5, title: "Ausgabe", explain: "Summe berechnen und anzeigen.", memory: "Ausgabe a+b" }
+        {
+          line: 1,
+          title: "Fragen",
+          explain: "Lehrer: Wir sagen dem Menschen, was wir brauchen.",
+          memory: "Prompt a"
+        },
+        {
+          line: 2,
+          title: "Lesen + Übersetzen",
+          explain: "Lehrer: Text kommt rein, Parse macht die Zahl. Profi: Hier knallt's bei Müll-Input.",
+          memory: "a = Zahl"
+        },
+        {
+          line: 3,
+          title: "Zweite Frage",
+          explain: "Gleicher Dialog für b.",
+          memory: "Prompt b"
+        },
+        {
+          line: 4,
+          title: "b setzen",
+          explain: "Jetzt hast du zwei Zahlen im Speicher.",
+          memory: "a,b gesetzt"
+        },
+        {
+          line: 5,
+          title: "Antworten",
+          explain: "Lehrer: Jetzt rechnen wir und zeigen das Ergebnis.",
+          memory: "Ausgabe a+b"
+        }
       ]
     },
     pitfalls: [
-      "Zahl erwartet, aber Parse auf Buchstaben → FormatException",
-      "WriteLine für Prompt → Cursor in nächster Zeile, wirkt unordentlich",
-      "Klammern vergessen: \"Summe: \" + a + b vs \"Summe: \" + (a + b)"
+      "\"Summe: \" + a + b ohne Klammern",
+      "Parse auf leere Eingabe",
+      "WriteLine für Prompts (unübersichtlich)"
     ],
     flashcards: [
-      {
-        front: "Was liefert ReadLine?",
-        back: "Einen string (eine Zeile Eingabe)."
-      },
-      {
-        front: "Wie wird aus Text eine Zahl?",
-        back: "int.Parse oder int.TryParse."
-      }
+      { front: "Was liefert ReadLine?", back: "Immer einen string." },
+      { front: "Parse vs TryParse?", back: "Parse wirft bei Fehler; TryParse gibt false." },
+      { front: "Warum (a + b)?", back: "Damit zuerst addiert, dann verkettet wird." }
     ],
     exercises: [
       {
         id: "netfx-io-pred-1",
         kind: "predictOutput",
-        prompt: "Was erscheint bei a=3 und b=4?",
+        prompt: "Lehrer: a=3, b=4 — was erscheint?",
         code: `int a = 3;
 int b = 4;
 Console.WriteLine("Summe: " + a + b);
@@ -466,7 +537,7 @@ Console.WriteLine("Summe: " + (a + b));`,
           "Compilerfehler"
         ],
         correctIndex: 1,
-        explanation: "Ohne Klammern wird verkettet: \"Summe: \" + 3 → \"Summe: 3\" + 4 → \"Summe: 34\".",
+        explanation: "Ohne Klammern Bauklötze aus Text; mit Klammern Mathematik.",
         xp: 25
       },
       {
@@ -482,28 +553,28 @@ string name = Console.______();`,
       {
         id: "netfx-io-mc-1",
         kind: "multipleChoice",
-        prompt: "Warum ist TryParse oft besser als Parse?",
+        prompt: "Warum TryParse oft besser?",
         options: [
-          "Weil es schneller ist als alles andere",
+          "Weil es immer schneller ist",
           "Weil ungültige Eingaben keinen Absturz erzeugen",
-          "Weil ReadLine sonst nicht funktioniert",
+          "Weil ReadLine sonst fehlt",
           "Weil Main sonst fehlt"
         ],
         correctIndex: 1,
-        explanation: "TryParse gibt false zurück statt Exception.",
+        explanation: "Robustheit > blinder Parse.",
         xp: 15
       },
       {
         id: "netfx-io-bug-1",
         kind: "spotBug",
-        prompt: "Finde den Verkettungsfehler-Risiko-Punkt.",
+        prompt: "Welche Zeile ist die Verkettungsfalle?",
         code: `int a = 2;
 int b = 5;
 Console.WriteLine("Produkt: " + a * b);
 Console.WriteLine("Summe: " + a + b);`,
         buggyLine: 4,
         fix: "Console.WriteLine(\"Summe: \" + (a + b));",
-        explanation: "* bindet stärker (ok), + verkettet ohne Klammern falsch.",
+        explanation: "* hat Vorrang (Produkt ok). + verkettet ohne Klammern.",
         xp: 25
       }
     ]
@@ -511,61 +582,79 @@ Console.WriteLine("Summe: " + a + b);`,
   {
     id: "netfx-winforms-basics",
     order: 4,
-    title: "Windows Forms Grundlagen (.NET Framework)",
+    title: "Windows Forms: Fenster, Controls, Klick verstehen",
     level: "Azubi",
     path: ["netfx", "klassenarbeit"],
     examFocus: "1. Klassenarbeit · WinForms",
     whyItMatters:
-      "Viele erste Klassenarbeiten sind WinForms: Button, TextBox, Label, Click-Event. Du musst Designer und Code verbinden können.",
-    minutes: 40,
+      "Wenn deine KA WinForms ist, musst du Designer und Code als ein Team sehen: Controls oben, Logik im Click.",
+    minutes: 45,
+    analogy:
+      "Das Formular ist ein Bedienpult. TextBoxen sind Schiebefächer für Text, Buttons sind Klingelknöpfe, Labels sind Anzeigen. Der Click-Handler ist das, was passiert, wenn jemand klingelt.",
     goals: [
-      "Form, Controls und Properties erklären",
-      "Click-Event-Handler lesen und schreiben",
-      "Text aus TextBox in Label/Variable übernehmen",
-      "MessageBox für Rückmeldungen nutzen"
+      "Form und Controls erklären",
+      "Name vs Text unterscheiden",
+      "Click-Handler lesen und schreiben",
+      "MessageBox gezielt einsetzen"
+    ],
+    teacherTalk: [
+      "Zwei Welten: Designer (du ziehst Controls) und Code (du programmierst Reaktion). Beides gehört zusammen.",
+      "`Text` ist das, was der User sieht (Beschriftung). `Name` ist der Variablenname im Code (`btnBerechnen`). Benenne sauber — dein zukünftiges Ich sagt danke.",
+      "Doppelklick auf den Button erzeugt `btn_Click(object sender, EventArgs e)`. sender = wer hat geklingelt, e = Extra-Infos zum Event.",
+      "`txtEingabe.Text` ist string — genau wie `Console.ReadLine()`. Zahlen brauchst du weiterhin per Parse.",
+      "`MessageBox.Show(\"...\")` ist wie ein Lehrer, der kurz die Tafel hochhält: Hinweis, Warnung, Ergebnis."
+    ],
+    proTips: [
+      "Profi: Naming-Konvention btn..., txt..., lbl..., lst... — sofort erkennbar.",
+      "Profi: Keine Fachlogik in Form1.Designer.cs — nur in Form1.cs.",
+      "Profi: Nach dem Lesen aus TextBoxen sofort validieren, dann rechnen."
+    ],
+    checkUnderstanding: [
+      "Unterschied Name und Text bei einem Button?",
+      "Was passiert beim Doppelklick auf einen Button im Designer?",
+      "Warum ist TextBox.Text ein string?"
     ],
     theory: [
-      "Eine Form ist das Fenster. Darauf legst du Controls: Button, TextBox, Label, ListBox, CheckBox, ComboBox.",
-      "Properties (Eigenschaften) im Eigenschaftenfenster: Name, Text, Enabled, Visible, Size, Location. `Name` ist der Bezeichner im Code (`btnBerechnen`).",
-      "Events: Doppelklick auf Button erzeugt `btnBerechnen_Click(object sender, EventArgs e)`. Darin steht die Reaktion auf den Klick.",
-      "`textBox1.Text` ist der Inhalt der Textbox (string). Daraus Zahlen parsen wie in Console-Apps.",
-      "`MessageBox.Show(\"Fertig\");` zeigt einen Dialog. Gut für Ergebnisse und Fehlermeldungen."
+      "Form = Fenster. Controls = Bedienlemente darauf.",
+      "Properties steuern Aussehen/Verhalten; Events steuern Reaktionen.",
+      "Click-Handler: `private void btn_Click(object sender, EventArgs e)`.",
+      "Datenfluss: Control.Text lesen → verarbeiten → Control.Text/MessageBox schreiben."
     ],
     remember: [
-      "Name-Property = Variablenname im Code.",
-      "Click-Handler = Reaktion auf Klick.",
+      "Name = Code-Bezeichner, Text = sichtbarer Text.",
+      "Click = Klingeln → Handler reagiert.",
       "TextBox.Text ist string."
     ],
     codeExamples: [
       {
-        title: "Typischer Button-Click",
+        title: "Klick: Name in Liste",
         code: `private void btnAdd_Click(object sender, EventArgs e)
 {
     string name = txtName.Text;
     if (name.Trim() == "")
     {
         MessageBox.Show("Bitte Name eingeben");
-        return;
+        return; // Lehrer: Hier ist Schluss, nicht weiterwursten
     }
     lstNames.Items.Add(name);
     txtName.Text = "";
 }`,
-        note: "Lesen → prüfen → Liste füllen → Eingabe leeren."
+        note: "Lehrer: Lies → prüfe → tu etwas → räume auf."
       },
       {
-        title: "Rechnung auf Button",
+        title: "Klick: Summe anzeigen",
         code: `private void btnSumme_Click(object sender, EventArgs e)
 {
     int a = int.Parse(txtA.Text);
     int b = int.Parse(txtB.Text);
     lblErgebnis.Text = "Summe: " + (a + b);
 }`,
-        note: "Gleicher Parse-Gedanke wie in der Konsole — nur UI statt Console."
+        note: "Profi: Später TryParse statt Parse — gleiche Idee wie in Console."
       }
     ],
     walkthrough: {
-      title: "Klick-Pfad verstehen",
-      code: `// User tippt in txtA und txtB
+      title: "Was passiert beim Klick?",
+      code: `// User tippt Zahlen in txtA/txtB
 // User klickt btnSumme
 private void btnSumme_Click(object sender, EventArgs e)
 {
@@ -576,54 +665,48 @@ private void btnSumme_Click(object sender, EventArgs e)
       steps: [
         {
           line: 1,
-          title: "Eingabe UI",
-          explain: "Werte stehen als Text in den TextBoxen.",
-          memory: "txtA.Text / txtB.Text"
+          title: "Daten liegen bereit",
+          explain: "Lehrer: Noch passiert nichts — nur Text in den Fächern.",
+          memory: "UI-Text vorhanden"
         },
         {
           line: 2,
-          title: "Event",
-          explain: "Klick löst den Handler aus.",
-          memory: "btnSumme_Click startet"
+          title: "Klingeln",
+          explain: "Lehrer: Click startet den Handler. Profi: UI-Thread führt das aus.",
+          memory: "Handler start"
         },
         {
           line: 5,
-          title: "Parsen",
-          explain: "Strings werden zu ints.",
-          memory: "a,b als int"
+          title: "Übersetzen",
+          explain: "Lehrer: Aus Text wird Zahl — wie bei Console.",
+          memory: "a,b ints"
         },
         {
           line: 7,
-          title: "Anzeige",
-          explain: "Label-Text wird gesetzt — User sieht Ergebnis.",
-          memory: "lblErgebnis aktualisiert"
+          title: "Anzeigen",
+          explain: "Lehrer: Label ist die Anzeige am Pult.",
+          memory: "lbl gesetzt"
         }
       ]
     },
     pitfalls: [
-      "Control nicht benannt (immer button1) → unleserlich",
-      "Parse ohne Prüfung bei leerer TextBox",
-      "Logik in Designer-Datei schreiben statt in Form1.cs"
+      "Controls heißen noch button1/textBox1",
+      "Parse ohne Prüfung",
+      "Code in Designer-Datei"
     ],
     flashcards: [
       {
         front: "Was ist ein Event-Handler?",
-        back: "Eine Methode, die auf ein Ereignis (z. B. Click) reagiert."
+        back: "Methode, die auf ein Ereignis (z. B. Click) reagiert."
       },
-      {
-        front: "Wo steht der Text einer TextBox?",
-        back: "In der Property Text."
-      },
-      {
-        front: "Wozu MessageBox.Show?",
-        back: "Zeigt einen Dialog mit Information/Warnung."
-      }
+      { front: "TextBox-Inhalt?", back: "Property Text (string)." },
+      { front: "MessageBox.Show?", back: "Zeigt einen Dialog." }
     ],
     exercises: [
       {
         id: "netfx-win-mc-1",
         kind: "multipleChoice",
-        prompt: "Welche Signatur hat ein typischer Button-Click unter WinForms?",
+        prompt: "Typische Click-Signatur?",
         options: [
           "void Click()",
           "private void btn_Click(object sender, EventArgs e)",
@@ -631,22 +714,22 @@ private void btnSumme_Click(object sender, EventArgs e)
           "string TextBox()"
         ],
         correctIndex: 1,
-        explanation: "sender + EventArgs ist das WinForms-Standardmuster.",
+        explanation: "sender + EventArgs ist WinForms-Standard.",
         xp: 15
       },
       {
         id: "netfx-win-fill-1",
         kind: "fillBlank",
-        prompt: "Text aus TextBox lesen.",
+        prompt: "Text lesen.",
         code: `string eingabe = txtWert.____;`,
         blanks: [{ id: "b1", answer: "Text" }],
-        explanation: "Text ist die Property für den Inhalt.",
+        explanation: "Text = Inhalt.",
         xp: 10
       },
       {
         id: "netfx-win-order-1",
         kind: "orderCode",
-        prompt: "Ordne die WinForms-Klick-Logik.",
+        prompt: "Ordne den Datenfluss.",
         lines: [
           "string s = txtA.Text;",
           "int zahl = int.Parse(s);",
@@ -660,29 +743,29 @@ private void btnSumme_Click(object sender, EventArgs e)
       {
         id: "netfx-win-bug-1",
         kind: "spotBug",
-        prompt: "Warum ist das riskant?",
+        prompt: "Was stimmt hier nicht?",
         code: `private void btn_Click(object sender, EventArgs e)
 {
     int x = int.Parse(txtA.Text);
     lblOut.Text = x;
 }`,
         buggyLine: 4,
-        fix: "lblOut.Text = x.ToString(); (Text erwartet string)",
-        explanation: "Label.Text ist string — int muss konvertiert werden (je nach Kontext Fehler/Warnung).",
+        fix: "lblOut.Text = x.ToString();",
+        explanation: "Text erwartet string.",
         xp: 25
       },
       {
         id: "netfx-win-mc-2",
         kind: "multipleChoice",
-        prompt: "Wozu dient die Name-Property eines Buttons?",
+        prompt: "Wozu Name-Property?",
         options: [
-          "Nur für die sichtbare Beschriftung",
-          "Als Bezeichner im Code (z. B. btnStart)",
-          "Nur für Farben",
+          "Nur sichtbare Beschriftung",
+          "Bezeichner im Code (btnStart)",
+          "Nur Farbe",
           "Ersetzt Main"
         ],
         correctIndex: 1,
-        explanation: "Text = Beschriftung, Name = Code-Bezeichner.",
+        explanation: "Text sichtbar, Name im Code.",
         xp: 15
       }
     ],
@@ -691,33 +774,51 @@ private void btnSumme_Click(object sender, EventArgs e)
   {
     id: "netfx-winforms-logic",
     order: 5,
-    title: "WinForms + C#-Logik: Rechnen, If, Listen",
+    title: "WinForms + Logik: prüfen, rechnen, entscheiden",
     level: "Azubi",
     path: ["netfx", "klassenarbeit"],
     examFocus: "1. Klassenarbeit · UI trifft Algorithmus",
     whyItMatters:
-      "Die KA prüft nicht nur Designer-Klicks, sondern ob du if/Schleifen/Arrays hinter dem Button beherrschst.",
-    minutes: 35,
+      "Punkte gibt’s für Denken hinter dem Button: Validieren, if/else, Schleifen — nicht fürs schöne Formular allein.",
+    minutes: 40,
+    analogy:
+      "Der Button ist nur der Türklingel-Knopf. Die Wohnung dahinter (deine ifs und Schleifen) entscheidet, was wirklich passiert.",
     goals: [
-      "Eingaben validieren bevor gerechnet wird",
-      "If/else in Event-Handlern nutzen",
-      "ListBox/Items.Add verstehen",
-      "Klar trennen: UI lesen → Logik → UI schreiben"
+      "Muster UI → Logik → UI anwenden",
+      "Validierung vor dem Rechnen",
+      "ListBox.Items.Add nutzen",
+      "return nach Fehlern bewusst einsetzen"
+    ],
+    teacherTalk: [
+      "Immer dieselbe Choreografie: 1) Werte holen 2) prüfen 3) rechnen/entscheiden 4) anzeigen. Wenn du das kannst, bist du für 80% der KA-Aufgaben gerüstet.",
+      "Validierung heißt: Darf ich überhaupt weiterrechnen? Leere TextBox? Keine Zahl? Division durch 0?",
+      "`return;` im Handler ist erlaubt und klug: „Ich breche hier ab.“ Du musst nicht alles in verschachtelte else packen.",
+      "ListBox ist eine Anzeigetafel für Einträge. `Items.Add` hängt an, `Clear` wischte weg."
+    ],
+    proTips: [
+      "Profi: Frühe returns halten Code flach und lesbar.",
+      "Profi: Fehlermeldungen konkret machen („Bitte ganze Zahl“ statt nur „Fehler“).",
+      "Profi: Dieselbe Fachmethode (z. B. Summe1BisN) von Console und WinForms wiederverwenden — zeigt echtes Verständnis."
+    ],
+    checkUnderstanding: [
+      "Nenne die 4 Schritte jeder WinForms-Aufgabe.",
+      "Wann ist return im Click-Handler sinnvoll?",
+      "Was macht Items.Add?"
     ],
     theory: [
-      "Muster für jede WinForms-Aufgabe: 1) Werte aus Controls lesen 2) prüfen/parsen 3) berechnen/entscheiden 4) Ergebnis in Controls schreiben.",
-      "Validierung: leere TextBox, keine Zahl, Division durch 0, negative Werte — je nach Aufgabenstellung.",
-      "`listBox1.Items.Add(text)` hängt einen Eintrag an. `Items.Clear()` leert. `SelectedItem` liest Auswahl.",
-      "Zu viel Logik im Click-Handler wird unübersichtlich — kleine Hilfsmethoden in derselben Form-Klasse sind ok und zeigen Verständnis."
+      "Datenfluss: lesen → prüfen → verarbeiten → schreiben.",
+      "TryParse + return verhindert Abstürze.",
+      "if/else im Handler = Fachentscheidung.",
+      "ListBox.Items verwaltet Einträge."
     ],
     remember: [
       "UI → Logik → UI.",
       "Erst prüfen, dann rechnen.",
-      "Items.Add für ListBox-Einträge."
+      "Items.Add für ListBox."
     ],
     codeExamples: [
       {
-        title: "Notenbewertung per Button",
+        title: "Bestanden? — mit Lehrerstruktur",
         code: `private void btnBewerten_Click(object sender, EventArgs e)
 {
     int punkte;
@@ -732,18 +833,7 @@ private void btnSumme_Click(object sender, EventArgs e)
     else
         lblStatus.Text = "nicht bestanden";
 }`,
-        note: "TryParse + if — klassisches Schulmuster."
-      },
-      {
-        title: "ListBox füllen",
-        code: `private void btnAdd_Click(object sender, EventArgs e)
-{
-    if (txtItem.Text.Trim() == "")
-        return;
-    lstItems.Items.Add(txtItem.Text.Trim());
-    txtItem.Clear();
-}`,
-        note: "Trim verhindert leere/space-only Einträge."
+        note: "Lehrer: Zwei ifs — erst Technik (Parse), dann Fach (Bestanden)."
       }
     ],
     walkthrough: {
@@ -759,75 +849,72 @@ else lblStatus.Text = "nein";`,
       steps: [
         {
           line: 2,
-          title: "Parse-Versuch",
-          explain: "Wenn Text keine Zahl ist → false.",
+          title: "Technik-Check",
+          explain: "Lehrer: Ist der Text überhaupt eine Zahl?",
           memory: "TryParse"
         },
         {
           line: 4,
           title: "Abbruch",
-          explain: "User informieren und Handler verlassen.",
+          explain: "Lehrer: Wenn nein, klar sagen und stoppen.",
           memory: "return"
         },
         {
           line: 7,
-          title: "Fachlogik",
-          explain: "Erst jetzt ist punkte sicher eine Zahl.",
+          title: "Fach-Check",
+          explain: "Lehrer: Jetzt darfst du fachlich entscheiden.",
           memory: "punkte gültig"
         }
       ]
     },
     pitfalls: [
-      "Ergebnis berechnen bevor Parse geprüft wurde",
-      "Visible-Logik mit Fachlogik vermischen ohne Struktur",
+      "Rechnen vor Validierung",
+      "Riesige else-Ketten statt return",
       "ListBox mit Array verwechseln"
     ],
     flashcards: [
       {
-        front: "4 Schritte jeder WinForms-Aufgabe?",
+        front: "4 Schritte?",
         back: "Lesen → Prüfen → Rechnen/Entscheiden → Anzeigen."
       },
-      {
-        front: "Items.Add?",
-        back: "Fügt einen Eintrag in ListBox/ComboBox hinzu."
-      }
+      { front: "Items.Add?", back: "Fügt einen ListBox-Eintrag hinzu." }
     ],
     exercises: [
       {
         id: "netfx-logic-mc-1",
         kind: "multipleChoice",
-        prompt: "Wann solltest du return im Click-Handler nutzen?",
+        prompt: "Wann return im Handler?",
         options: [
           "Immer ganz am Ende zwingend",
-          "Nach fehlgeschlagener Validierung, um nicht weiterzurechnen",
+          "Nach fehlgeschlagener Validierung",
           "Nur in Main",
           "Nie"
         ],
         correctIndex: 1,
-        explanation: "Früh raus, wenn Eingabe ungültig ist.",
+        explanation: "Früh raus bei ungültiger Eingabe.",
         xp: 15
       },
       {
         id: "netfx-logic-trace-1",
         kind: "traceState",
-        prompt: "txtPunkte.Text = \"40\"",
+        prompt: "txtPunkte = \"40\"",
         code: `int punkte = int.Parse("40");
 string status;
 if (punkte >= 50) status = "ok";
 else status = "nein";`,
-        question: "Wert von status?",
+        question: "status?",
         options: ["ok", "nein", "40", "leer"],
         correctIndex: 1,
-        explanation: "40 < 50 → nicht bestanden.",
+        explanation: "40 < 50.",
         xp: 15
       },
       {
         id: "netfx-logic-fill-1",
         kind: "fillBlank",
-        prompt: "Eintrag in ListBox.",
+        prompt: "ListBox füllen.",
         code: `lstNamen.Items.____(txtName.Text);`,
         blanks: [{ id: "b1", answer: "Add" }],
-        explanation: "Add hängt den Text an.",
+        explanation: "Add hängt an.",
         xp: 10
       },
       {
@@ -848,31 +935,49 @@ else status = "nein";`,
   {
     id: "netfx-ka1-boss",
     order: 6,
-    title: "Boss: 1. Klassenarbeit .NET Framework Simulation",
+    title: "Boss: 1. Klassenarbeit Simulation (.NET Framework)",
     level: "Boss",
     path: ["netfx", "klassenarbeit"],
     examFocus: "1. Klassenarbeit Simulation",
     whyItMatters:
-      "Hier trainierst du gemischt genau das, was in der ersten Framework-KA zählt: Gerüst, Ein-/Ausgabe, if, Schleifen, WinForms-Events.",
-    minutes: 45,
+      "Jetzt prüfst du dich selbst: Gerüst, IO, if, Schleifen, WinForms — unter Zeit, mit Abgabe-Checkliste.",
+    minutes: 50,
+    analogy:
+      "Die KA ist ein Parcours: Jede Station (Main, Parse, if, Schleife, Button) kennst du einzeln — jetzt läufst du sie hintereinander.",
     goals: [
       "Console- und WinForms-Muster sicher unterscheiden",
-      "Typische KA-Aufgaben end-to-end lösen",
-      "Fehlerquellen vor dem Abgeben checken"
+      "Typische Aufgaben end-to-end lösen",
+      "Vor Abgabe systematisch prüfen"
+    ],
+    teacherTalk: [
+      "Strategie: Aufgabe laut in eigenen Worten wiederholen. Dann Eingaben/Ausgaben auflisten. Dann ein Zahlenbeispiel. Dann code.",
+      "Wenn du steckst: Schreib den Algorithmus auf Deutsch („solange i kleiner gleich n, addiere i zur Summe“). Danach übersetzen.",
+      "Vor Abgabe die 4 Checks: Startet es? Grenzwerte? Parse sicher? Klammern bei Summenausgabe?",
+      "Du darfst Teilpunkte sichern: lieber eine korrekte Schleife ohne Perfektion als eine leere Datei."
+    ],
+    proTips: [
+      "Profi: Dieselbe Kernfunktion (Summe1BisN) in beiden Welten — Console Main und Button Click.",
+      "Profi: Kommentiere nur Warum, nicht Was — in der KA sparsam und klar.",
+      "Profi: Nach dem ersten grünen Lauf bewusst einen Fehlerfall testen."
+    ],
+    checkUnderstanding: [
+      "Erkläre Console-Einstieg vs WinForms-Einstieg.",
+      "Nenne drei Punktefresser der 1. KA.",
+      "Wie testest du vor Abgabe?"
     ],
     theory: [
-      "Checkliste vor Abgabe: Läuft F5? Alle Controls benannt? Parse abgesichert? Grenzwerte getestet? Main/Handler nicht durcheinander?",
-      "Console-KA: alles in Main/Methoden. WinForms-KA: Logik in Event-Handlern + Properties.",
-      "Punktefresser Nr.1: Integer-Division, fehlende Klammern bei Verkettung, leere TextBox + Parse, Main ohne static."
+      "Console: Logik in Main/Methoden. WinForms: Logik in Event-Handlern.",
+      "Punktefresser: Parse ohne Check, Integer-Division/Verkettung, Main ohne static, unbenannte Controls.",
+      "Abgabe-Checkliste schlägt Panik-Coding."
     ],
     remember: [
-      "Framework-Gerüst beachten.",
-      "UI und Logik klar trennen.",
-      "Vor Abgabe mental tracen."
+      "Erst verstehen, dann tippen.",
+      "UI und Logik trennen.",
+      "Grenzfälle testen."
     ],
     codeExamples: [
       {
-        title: "Mini-Console-KA",
+        title: "Console-Parcours",
         code: `using System;
 
 namespace KA1
@@ -890,10 +995,10 @@ namespace KA1
         }
     }
 }`,
-        note: "Summe 1..n — Klassiker."
+        note: "Lehrer: Für n=4 musst du im Kopf 10 erwarten."
       },
       {
-        title: "Mini-WinForms-KA",
+        title: "WinForms-Parcours",
         code: `private void btnGo_Click(object sender, EventArgs e)
 {
     int n;
@@ -906,52 +1011,77 @@ namespace KA1
     for (int i = 1; i <= n; i++) summe += i;
     lblOut.Text = "Summe: " + summe;
 }`,
-        note: "Dieselbe Logik, andere Oberfläche."
+        note: "Profi: Gleiche Mathematik, bessere Eingabsicherung."
       }
     ],
     walkthrough: {
       title: "KA-Strategie",
-      code: `// 1 Aufgabe auf Deutsch nacherzählen
-// 2 Eingaben/Ausgaben listen
+      code: `// 1 Aufgabe auf Deutsch
+// 2 I/O listen
 // 3 Grenzfall wählen
 // 4 Code schreiben
 // 5 F5 + Trace`,
       steps: [
-        { line: 1, title: "Verstehen", explain: "Ohne Aufgabenverständnis kein Code.", memory: "Ziel klar" },
-        { line: 2, title: "I/O", explain: "Was kommt rein, was muss raus?", memory: "I/O-Liste" },
-        { line: 3, title: "Rand", explain: "0, 1, negativ, Text statt Zahl.", memory: "Tests" },
-        { line: 4, title: "Umsetzen", explain: "Gerüst + Logik.", memory: "Code" },
-        { line: 5, title: "Prüfen", explain: "Starten und mit Beispiel vergleichen.", memory: "OK/Fix" }
+        {
+          line: 1,
+          title: "Verstehen",
+          explain: "Lehrer: Wenn du es nicht erklären kannst, kannst du es nicht coden.",
+          memory: "Ziel klar"
+        },
+        {
+          line: 2,
+          title: "I/O",
+          explain: "Was kommt rein, was muss raus?",
+          memory: "I/O-Liste"
+        },
+        {
+          line: 3,
+          title: "Rand",
+          explain: "0, 1, Text statt Zahl — vorher überlegen.",
+          memory: "Tests"
+        },
+        {
+          line: 4,
+          title: "Umsetzen",
+          explain: "Gerüst + Logik.",
+          memory: "Code"
+        },
+        {
+          line: 5,
+          title: "Prüfen",
+          explain: "Beispiel + Fehlerfall.",
+          memory: "OK/Fix"
+        }
       ]
     },
     pitfalls: [
       "Sofort hacken ohne Beispiel",
-      "WinForms-Text und Console-WriteLine mischen",
-      "Nur Happy Path testen"
+      "Console und WinForms mischen",
+      "Nur Happy Path"
     ],
     flashcards: [
       {
         front: "Console vs WinForms Einstieg?",
-        back: "Console: Main. WinForms: Event-Handler auf der Form."
+        back: "Console: Main. WinForms: Event-Handler."
       },
       {
-        front: "3 Punktefresser der 1. KA?",
-        back: "Parse ohne Check, Integer-Division/Verkettung, falsches Gerüst/Main."
+        front: "3 Punktefresser?",
+        back: "Parse ohne Check, Verkettung/Integer-Division, falsches Main/Gerüst."
       }
     ],
     exercises: [
       {
         id: "netfx-boss-mc-1",
         kind: "multipleChoice",
-        prompt: "Welche Aussage ist für .NET-Framework-KA richtig?",
+        prompt: "Was erwartet die Framework-KA typischerweise?",
         options: [
-          "Top-Level-Statements sind Pflicht",
-          "Klassisches Main- oder WinForms-Event-Muster wird erwartet",
-          "Nur ASP.NET zählt",
-          "Ohne Visual Studio unmöglich zu denken"
+          "Top-Level-Statements Pflicht",
+          "Klassisches Main- oder WinForms-Event-Muster",
+          "Nur ASP.NET",
+          "Ohne VS unmöglich zu denken"
         ],
         correctIndex: 1,
-        explanation: "Schulen erwarten klassische Struktur.",
+        explanation: "Klassische Struktur zählt.",
         xp: 20
       },
       {
@@ -970,21 +1100,21 @@ Console.WriteLine(summe);`,
       {
         id: "netfx-boss-trace-1",
         kind: "traceState",
-        prompt: "Nach dem Handler-Logikstück.",
+        prompt: "Nach dem Stück.",
         code: `string t = "12";
 int x;
 bool ok = int.TryParse(t, out x);
 string msg = ok ? (x * 2).ToString() : "fail";`,
-        question: "Wert von msg?",
+        question: "msg?",
         options: ["12", "24", "fail", "true"],
         correctIndex: 1,
-        explanation: "Parse ok, 12*2=24.",
+        explanation: "12*2=24.",
         xp: 20
       },
       {
         id: "netfx-boss-order-1",
         kind: "orderCode",
-        prompt: "Ordne die Abgabe-Checkliste.",
+        prompt: "Abgabe-Checkliste ordnen.",
         lines: [
           "Aufgabe in eigenen Worten",
           "Grenzfälle notieren",
@@ -998,7 +1128,7 @@ string msg = ok ? (x * 2).ToString() : "fail";`,
       {
         id: "netfx-boss-bug-1",
         kind: "spotBug",
-        prompt: "Framework-Gerüst-Bug.",
+        prompt: "Gerüst-Bug finden.",
         code: `namespace KA1
 {
     class Program

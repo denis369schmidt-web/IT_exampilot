@@ -103,8 +103,16 @@ export interface CsharpModule {
   examFocus: string;
   whyItMatters: string;
   minutes: number;
+  /** Kurze Alltags-Analogie, die das Thema greifbar macht */
+  analogy?: string;
   goals: string[];
   theory: string[];
+  /** Lehrerstimme: geduldig, bildhaft, prüft Verständnis */
+  teacherTalk?: string[];
+  /** Profi-Coder: Praxis, Clean Code, echte Stolperfallen */
+  proTips?: string[];
+  /** Fragen, die der Schüler laut beantworten können soll */
+  checkUnderstanding?: string[];
   remember: string[];
   codeExamples: Array<{ title: string; code: string; note: string }>;
   walkthrough?: {

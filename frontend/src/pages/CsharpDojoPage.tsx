@@ -53,8 +53,8 @@ export function CsharpDojoPage() {
           .NET Framework wirklich verstehen
         </h1>
         <p className="mt-4 max-w-3xl text-slate-300">
-          Für deine erste Klassenarbeit in Visual Studio: klassisches Main-Gerüst, Console,
-          Windows Forms, Events und Logik — mit Walkthroughs und Speicher-Trace, nicht nur Quiz.
+          Du bist der Schüler — wir erklären wie ein geduldiger Lehrer und schärfen wie ein
+          Profi-Coder. .NET Framework, Main, Console, WinForms: verstehen, dann üben.
         </p>
 
         <div className="mt-6 grid grid-cols-2 gap-3 md:grid-cols-5">

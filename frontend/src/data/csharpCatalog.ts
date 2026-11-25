@@ -3,6 +3,7 @@ import { csharpCatalogPart2 } from "./csharpCatalogPart2";
 import { csharpCatalogPart3 } from "./csharpCatalogPart3";
 import { csharpFoundation } from "./csharpFoundation";
 import { csharpNetFramework } from "./csharpNetFramework";
+import { applyTeacherEnrichment } from "./csharpTeacherEnrichment";
 import type { CsharpExercise, CsharpModule, CsharpPath } from "./csharpTypes";
 
 export type {
@@ -17,10 +18,10 @@ export type {
 export { csharpLevelColors } from "./csharpTypes";
 
 function normalize(module: CsharpModule): CsharpModule {
-  return {
+  return applyTeacherEnrichment({
     ...module,
     path: module.path ?? ["pruefung", "klassenarbeit", "netfx"]
-  };
+  });
 }
 
 export const csharpCatalog: CsharpModule[] = [
