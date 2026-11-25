@@ -39,11 +39,11 @@ export function LearningModulePage() {
         back: item.answer
       })),
       ...module.learn.slice(0, 3).map((item) => ({
-        front: `Erklaere: ${item}`,
+        front: `Erkläre: ${item}`,
         back: module.explanation[0]
       })),
       ...module.examTips.slice(0, 2).map((item) => ({
-        front: "Welche Pruefungsfalle oder welcher Tipp passt hier?",
+        front: "Welche Prüfungsfalle oder welcher Tipp passt hier?",
         back: item
       }))
     ];
@@ -106,59 +106,69 @@ export function LearningModulePage() {
   }
 
   return (
-    <div>
-      <Link to="/learning" className="text-sm font-semibold text-emerald-300 hover:text-emerald-200">
-        Zurueck zur Lernuebersicht
+    <div className="space-y-6">
+      <Link
+        to="/learning"
+        className="inline-flex items-center gap-2 text-sm font-semibold text-emerald-300 transition hover:text-emerald-200"
+      >
+        ← Zurück zur Lernübersicht
       </Link>
 
-      <div className="mt-6 flex flex-col gap-5 md:flex-row md:items-start md:justify-between">
-        <div>
-          <div className="flex flex-wrap gap-2 text-xs font-semibold">
-            <span className="rounded bg-slate-800 px-2 py-1 text-emerald-300">{module.examPart}</span>
-            <span className="rounded bg-slate-800 px-2 py-1 text-blue-300">{trackLabels[module.track]}</span>
-            <span className="rounded bg-slate-800 px-2 py-1 text-slate-300">{module.level}</span>
+      <section className="ep-panel relative overflow-hidden p-6 md:p-8">
+        <div className="pointer-events-none absolute -right-12 -top-16 h-48 w-48 rounded-full bg-emerald-400/15 blur-3xl" />
+        <div className="relative flex flex-col gap-5 md:flex-row md:items-start md:justify-between">
+          <div>
+            <div className="flex flex-wrap gap-2">
+              <span className="ep-chip text-emerald-300">{module.examPart}</span>
+              <span className="ep-chip text-cyan-300">{trackLabels[module.track]}</span>
+              <span className="ep-chip text-slate-300">{module.level}</span>
+            </div>
+            <h1 className="font-display mt-4 text-3xl font-bold text-white md:text-4xl">
+              {module.title}
+            </h1>
+            <p className="mt-3 max-w-3xl text-base leading-7 text-slate-400">{module.whyItMatters}</p>
           </div>
-          <h1 className="mt-3 text-4xl font-bold tracking-tight">{module.title}</h1>
-          <p className="mt-3 max-w-3xl text-slate-400">{module.whyItMatters}</p>
-        </div>
 
-        <button
-          onClick={toggleDone}
-          className={`rounded-lg px-5 py-3 text-sm font-semibold ${
-            isDone ? "bg-emerald-500 text-slate-950" : "bg-slate-800 text-slate-200 hover:bg-slate-700"
-          }`}
-        >
-          {isDone ? "Gelernt" : "Als gelernt markieren"}
-        </button>
-      </div>
-
-      <section className="mt-8 border-y border-slate-800 py-4">
-        <div className="flex flex-wrap gap-3">
-          {[
-            ["chapter", "Kapitel"],
-            ["cards", "Karteikarten"],
-            ["exam", "Pruefungssimulation"]
-          ].map(([tab, label]) => (
-            <button
-              key={tab}
-              onClick={() => setActiveTab(tab as Tab)}
-              className={`rounded-lg px-4 py-2 text-sm font-semibold ${
-                activeTab === tab
-                  ? "bg-emerald-500 text-slate-950"
-                  : "bg-slate-900 text-slate-300 hover:bg-slate-800"
-              }`}
-            >
-              {label}
-            </button>
-          ))}
+          <button
+            onClick={toggleDone}
+            className={
+              isDone
+                ? "ep-btn bg-emerald-400 text-slate-950 hover:bg-emerald-300"
+                : "ep-btn-ghost"
+            }
+          >
+            {isDone ? "Gelernt" : "Als gelernt markieren"}
+          </button>
         </div>
       </section>
 
+      <div className="flex flex-wrap gap-2">
+        {(
+          [
+            ["chapter", "Kapitel"],
+            ["cards", "Karteikarten"],
+            ["exam", "Prüfungssimulation"]
+          ] as const
+        ).map(([tab, label]) => (
+          <button
+            key={tab}
+            onClick={() => setActiveTab(tab)}
+            className={`rounded-xl px-4 py-2.5 text-sm font-semibold transition ${
+              activeTab === tab
+                ? "bg-emerald-400 text-slate-950 shadow-glow"
+                : "border border-white/10 bg-slate-900/60 text-slate-300 hover:bg-slate-800"
+            }`}
+          >
+            {label}
+          </button>
+        ))}
+      </div>
+
       {activeTab === "chapter" && (
-        <section className="mt-8 grid gap-5">
+        <section className="grid gap-5 animate-fade-up">
           <div className="grid gap-5 lg:grid-cols-2">
-            <div className="rounded-2xl border border-slate-800 bg-slate-900 p-6 shadow-xl">
-              <h2 className="text-xl font-bold">Erklaerung</h2>
+            <div className="ep-panel p-6">
+              <h2 className="font-display text-xl font-bold text-white">Erklärung</h2>
               <div className="mt-4 space-y-4 text-sm leading-7 text-slate-300">
                 {module.explanation.map((item) => (
                   <p key={item}>{item}</p>
@@ -166,57 +176,57 @@ export function LearningModulePage() {
               </div>
             </div>
 
-            <div className="rounded-2xl border border-slate-800 bg-slate-900 p-6 shadow-xl">
-              <h2 className="text-xl font-bold">Beispiele</h2>
+            <div className="ep-panel p-6">
+              <h2 className="font-display text-xl font-bold text-white">Beispiele</h2>
               <ul className="mt-4 space-y-3 text-sm leading-7 text-slate-300">
                 {module.examples.map((item) => (
-                  <li key={item}>- {item}</li>
+                  <li key={item}>– {item}</li>
                 ))}
               </ul>
             </div>
           </div>
 
           <div className="grid gap-5 lg:grid-cols-3">
-            <div className="rounded-2xl border border-slate-800 bg-slate-900 p-6 shadow-xl">
-              <h2 className="text-xl font-bold">Das musst du koennen</h2>
+            <div className="ep-panel p-6">
+              <h2 className="font-display text-xl font-bold text-white">Das musst du können</h2>
               <ul className="mt-4 space-y-3 text-sm leading-7 text-slate-300">
                 {module.learn.map((item) => (
-                  <li key={item}>- {item}</li>
+                  <li key={item}>– {item}</li>
                 ))}
               </ul>
             </div>
 
-            <div className="rounded-2xl border border-slate-800 bg-slate-900 p-6 shadow-xl">
-              <h2 className="text-xl font-bold">Pruefungstipps</h2>
+            <div className="ep-panel p-6">
+              <h2 className="font-display text-xl font-bold text-white">Prüfungstipps</h2>
               <ul className="mt-4 space-y-3 text-sm leading-7 text-slate-300">
                 {module.examTips.map((item) => (
-                  <li key={item}>- {item}</li>
+                  <li key={item}>– {item}</li>
                 ))}
               </ul>
             </div>
 
-            <div className="rounded-2xl border border-slate-800 bg-slate-900 p-6 shadow-xl">
-              <h2 className="text-xl font-bold">Uebungen</h2>
+            <div className="ep-panel p-6">
+              <h2 className="font-display text-xl font-bold text-white">Übungen</h2>
               <ul className="mt-4 space-y-3 text-sm leading-7 text-slate-300">
                 {module.practice.map((item) => (
-                  <li key={item}>- {item}</li>
+                  <li key={item}>– {item}</li>
                 ))}
               </ul>
             </div>
           </div>
 
-          <div className="rounded-2xl border border-emerald-900 bg-emerald-950/30 p-6 shadow-xl">
-            <h2 className="text-xl font-bold text-emerald-200">Abschluss-Check</h2>
+          <div className="ep-panel border-emerald-400/25 bg-emerald-500/10 p-6">
+            <h2 className="font-display text-xl font-bold text-emerald-200">Abschluss-Check</h2>
             <p className="mt-3 text-sm leading-7 text-emerald-50">{module.proof}</p>
           </div>
         </section>
       )}
 
       {activeTab === "cards" && (
-        <section className="mt-8">
-          <div className="rounded-2xl border border-slate-800 bg-slate-900 p-6 shadow-xl">
+        <section className="animate-fade-up">
+          <div className="ep-panel p-6">
             <div className="flex items-center justify-between gap-4">
-              <h2 className="text-xl font-bold">Karteikarten</h2>
+              <h2 className="font-display text-xl font-bold text-white">Karteikarten</h2>
               <p className="text-sm text-slate-400">
                 {cardIndex + 1} / {cards.length}
               </p>
@@ -224,9 +234,9 @@ export function LearningModulePage() {
 
             <button
               onClick={() => setShowCardAnswer((value) => !value)}
-              className="mt-6 min-h-64 w-full rounded-2xl border border-slate-700 bg-slate-950 p-8 text-left hover:border-emerald-500"
+              className="mt-6 min-h-64 w-full rounded-2xl border border-white/10 bg-slate-950/80 p-8 text-left transition hover:border-emerald-400/50 hover:shadow-glow"
             >
-              <p className="text-sm font-semibold uppercase tracking-[0.2em] text-emerald-400">
+              <p className="text-xs font-semibold uppercase tracking-[0.25em] text-emerald-300">
                 {showCardAnswer ? "Antwort" : "Frage"}
               </p>
               <p className="mt-4 text-2xl font-bold leading-9 text-white">
@@ -236,17 +246,14 @@ export function LearningModulePage() {
             </button>
 
             <div className="mt-5 flex flex-wrap gap-3">
-              <button
-                onClick={previousCard}
-                className="rounded-lg bg-slate-800 px-4 py-3 text-sm font-semibold text-slate-200 hover:bg-slate-700"
-              >
+              <button onClick={previousCard} className="ep-btn-ghost">
                 Vorherige
               </button>
               <button
                 onClick={nextCard}
-                className="rounded-lg bg-emerald-500 px-4 py-3 text-sm font-semibold text-slate-950 hover:bg-emerald-400"
+                className="ep-btn bg-emerald-400 text-slate-950 hover:-translate-y-0.5 hover:bg-emerald-300"
               >
-                Naechste Karte
+                Nächste Karte
               </button>
             </div>
           </div>
@@ -254,17 +261,18 @@ export function LearningModulePage() {
       )}
 
       {activeTab === "exam" && (
-        <section className="mt-8 grid gap-5">
-          <div className="rounded-2xl border border-slate-800 bg-slate-900 p-6 shadow-xl">
+        <section className="grid gap-5 animate-fade-up">
+          <div className="ep-panel p-6">
             <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
               <div>
-                <h2 className="text-xl font-bold">Pruefungssimulation</h2>
+                <h2 className="font-display text-xl font-bold text-white">Prüfungssimulation</h2>
                 <p className="mt-2 text-sm text-slate-400">
-                  Beantworte erst im Kopf oder auf Papier. Dann loese auf und markiere ehrlich, was du konntest.
+                  Beantworte erst im Kopf oder auf Papier. Dann löse auf und markiere ehrlich, was
+                  du konntest.
                 </p>
               </div>
-              <div className="rounded-xl bg-slate-950 px-5 py-3 text-center">
-                <p className="text-2xl font-bold text-white">{examScore}%</p>
+              <div className="ep-panel-soft px-5 py-3 text-center">
+                <p className="font-display text-2xl font-bold text-white">{examScore}%</p>
                 <p className="text-xs text-slate-500">sicher beantwortet</p>
               </div>
             </div>
@@ -275,32 +283,33 @@ export function LearningModulePage() {
             const known = knownAnswers.has(index);
 
             return (
-              <article key={item.question} className="rounded-2xl border border-slate-800 bg-slate-900 p-6 shadow-xl">
+              <article key={item.question} className="ep-panel p-6">
                 <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
                   <div>
                     <p className="text-sm font-semibold text-emerald-300">Aufgabe {index + 1}</p>
-                    <h3 className="mt-2 text-xl font-bold">{item.question}</h3>
+                    <h3 className="font-display mt-2 text-xl font-bold text-white">
+                      {item.question}
+                    </h3>
                   </div>
                   <button
                     onClick={() => toggleKnown(index)}
-                    className={`rounded-lg px-4 py-2 text-sm font-semibold ${
-                      known ? "bg-emerald-500 text-slate-950" : "bg-slate-800 text-slate-200 hover:bg-slate-700"
-                    }`}
+                    className={
+                      known
+                        ? "ep-btn bg-emerald-400 text-slate-950 hover:bg-emerald-300"
+                        : "ep-btn-ghost"
+                    }
                   >
                     {known ? "Konnte ich" : "Noch unsicher"}
                   </button>
                 </div>
 
                 {answerShown && (
-                  <p className="mt-5 rounded-xl bg-slate-950 p-4 text-sm leading-7 text-slate-300">
+                  <p className="mt-5 rounded-2xl border border-white/5 bg-slate-950/80 p-4 text-sm leading-7 text-slate-300">
                     {item.answer}
                   </p>
                 )}
 
-                <button
-                  onClick={() => toggleExamAnswer(index)}
-                  className="mt-5 rounded-lg bg-slate-800 px-4 py-2 text-sm font-semibold text-slate-200 hover:bg-slate-700"
-                >
+                <button onClick={() => toggleExamAnswer(index)} className="ep-btn-ghost mt-5">
                   {answerShown ? "Antwort verbergen" : "Antwort anzeigen"}
                 </button>
               </article>

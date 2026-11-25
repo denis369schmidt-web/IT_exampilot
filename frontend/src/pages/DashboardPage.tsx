@@ -63,32 +63,38 @@ export function DashboardPage() {
   }
 
   return (
-    <div>
-      <div className="mb-8">
-        <p className="text-sm uppercase tracking-[0.3em] text-blue-400">Portfolio Project</p>
-        <h1 className="mt-2 text-4xl font-bold tracking-tight">IHK Lern-Dashboard</h1>
-        <p className="mt-3 max-w-2xl text-slate-400">
+    <div className="space-y-8">
+      <section className="ep-panel relative overflow-hidden p-7 md:p-9">
+        <div className="pointer-events-none absolute -right-16 -top-20 h-56 w-56 rounded-full bg-cyan-400/15 blur-3xl animate-drift" />
+        <p className="relative text-xs font-semibold uppercase tracking-[0.35em] text-cyan-300">
+          Portfolio Project
+        </p>
+        <h1 className="font-display relative mt-3 text-4xl font-bold text-white md:text-5xl">
+          IHK Lern-Dashboard
+        </h1>
+        <p className="relative mt-3 max-w-2xl text-base leading-7 text-slate-400">
           Tracke AP1, AP2 und Projekt-Themen mit Fortschritt, Schwierigkeit und Status.
         </p>
-      </div>
+      </section>
 
       <section className="grid gap-4 md:grid-cols-4">
         <StatCard label="Themen" value={summary.totalTopics} hint="Alle gespeicherten Lernbereiche" />
-        <StatCard label="Gesamtfortschritt" value={`${summary.averageProgress}%`} hint="Durchschnitt aller Themen" />
+        <StatCard
+          label="Gesamtfortschritt"
+          value={`${summary.averageProgress}%`}
+          hint="Durchschnitt aller Themen"
+        />
         <StatCard label="AP1" value={`${summary.ap1Progress}%`} hint="Prüfungsbereich AP1" />
         <StatCard label="AP2" value={`${summary.ap2Progress}%`} hint="Prüfungsbereich AP2" />
       </section>
 
-      <section className="mt-8 grid gap-6 lg:grid-cols-[360px_1fr]">
-        <form
-          onSubmit={handleCreateTopic}
-          className="rounded-2xl border border-slate-800 bg-slate-900 p-6 shadow-xl"
-        >
-          <h2 className="text-xl font-semibold">Neues Thema</h2>
+      <section className="grid gap-6 lg:grid-cols-[360px_1fr]">
+        <form onSubmit={handleCreateTopic} className="ep-panel p-6">
+          <h2 className="font-display text-xl font-semibold text-white">Neues Thema</h2>
 
           <label className="mt-5 block text-sm text-slate-300">Titel</label>
           <input
-            className="mt-2 w-full rounded-lg border border-slate-700 bg-slate-950 px-4 py-3 outline-none focus:border-blue-500"
+            className="ep-input"
             value={title}
             onChange={(event) => setTitle(event.target.value)}
             required
@@ -96,7 +102,7 @@ export function DashboardPage() {
 
           <label className="mt-4 block text-sm text-slate-300">Kategorie</label>
           <input
-            className="mt-2 w-full rounded-lg border border-slate-700 bg-slate-950 px-4 py-3 outline-none focus:border-blue-500"
+            className="ep-input"
             value={category}
             onChange={(event) => setCategory(event.target.value)}
             required
@@ -106,7 +112,7 @@ export function DashboardPage() {
             <div>
               <label className="block text-sm text-slate-300">Prüfung</label>
               <select
-                className="mt-2 w-full rounded-lg border border-slate-700 bg-slate-950 px-4 py-3 outline-none focus:border-blue-500"
+                className="ep-input"
                 value={examPart}
                 onChange={(event) => setExamPart(event.target.value)}
               >
@@ -119,7 +125,7 @@ export function DashboardPage() {
             <div>
               <label className="block text-sm text-slate-300">Schwere</label>
               <select
-                className="mt-2 w-full rounded-lg border border-slate-700 bg-slate-950 px-4 py-3 outline-none focus:border-blue-500"
+                className="ep-input"
                 value={difficulty}
                 onChange={(event) => setDifficulty(event.target.value)}
               >
@@ -137,54 +143,49 @@ export function DashboardPage() {
             max="100"
             value={progress}
             onChange={(event) => setProgress(Number(event.target.value))}
-            className="mt-2 w-full"
+            className="mt-2 w-full accent-cyan-400"
           />
 
           <label className="mt-4 block text-sm text-slate-300">Notizen</label>
           <textarea
-            className="mt-2 h-28 w-full rounded-lg border border-slate-700 bg-slate-950 px-4 py-3 outline-none focus:border-blue-500"
+            className="ep-input h-28 resize-none"
             value={notes}
             onChange={(event) => setNotes(event.target.value)}
           />
 
-          <button className="mt-5 w-full rounded-lg bg-blue-600 px-4 py-3 font-semibold hover:bg-blue-500">
-            Thema speichern
-          </button>
+          <button className="ep-btn-primary mt-5 w-full">Thema speichern</button>
         </form>
 
-        <div className="rounded-2xl border border-slate-800 bg-slate-900 p-6 shadow-xl">
-          <h2 className="text-xl font-semibold">Lernthemen</h2>
+        <div className="ep-panel p-6">
+          <h2 className="font-display text-xl font-semibold text-white">Lernthemen</h2>
 
           <div className="mt-5 space-y-4">
             {topics.length === 0 && (
-              <p className="rounded-xl border border-dashed border-slate-700 p-6 text-center text-slate-400">
+              <p className="rounded-2xl border border-dashed border-white/15 p-6 text-center text-slate-400">
                 Noch keine Themen vorhanden. Lege dein erstes IHK-Thema an.
               </p>
             )}
 
             {topics.map((topic) => (
-              <article
-                key={topic.id}
-                className="rounded-xl border border-slate-800 bg-slate-950 p-5"
-              >
+              <article key={topic.id} className="ep-panel-soft p-5">
                 <div className="flex items-start justify-between gap-4">
                   <div>
-                    <h3 className="text-lg font-semibold">{topic.title}</h3>
+                    <h3 className="font-display text-lg font-semibold text-white">{topic.title}</h3>
                     <p className="mt-1 text-sm text-slate-400">
                       {topic.category} · {topic.examPart} · {topic.difficulty}
                     </p>
                   </div>
                   <button
                     onClick={() => handleDeleteTopic(topic.id)}
-                    className="rounded-lg bg-red-950 px-3 py-2 text-sm text-red-200 hover:bg-red-900"
+                    className="rounded-xl border border-rose-400/20 bg-rose-950/40 px-3 py-2 text-sm text-rose-200 hover:bg-rose-900/50"
                   >
                     Löschen
                   </button>
                 </div>
 
-                <div className="mt-4 h-3 overflow-hidden rounded-full bg-slate-800">
+                <div className="mt-4 h-2.5 overflow-hidden rounded-full bg-slate-800">
                   <div
-                    className="h-full bg-blue-500"
+                    className="h-full rounded-full bg-gradient-to-r from-cyan-400 to-emerald-400"
                     style={{ width: `${topic.progress}%` }}
                   />
                 </div>
@@ -192,7 +193,7 @@ export function DashboardPage() {
                 <p className="mt-2 text-sm text-slate-400">{topic.progress}% abgeschlossen</p>
 
                 {topic.notes && (
-                  <p className="mt-3 rounded-lg bg-slate-900 p-3 text-sm text-slate-300">
+                  <p className="mt-3 rounded-xl border border-white/5 bg-slate-900/80 p-3 text-sm text-slate-300">
                     {topic.notes}
                   </p>
                 )}
