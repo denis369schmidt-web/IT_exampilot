@@ -1,6 +1,7 @@
 import { FormEvent, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { isAxiosError } from "axios";
+import { AuthShell } from "../components/AuthShell";
 import { login } from "../api/auth";
 
 function startDemoLearning(navigate: ReturnType<typeof useNavigate>) {
@@ -27,70 +28,65 @@ export function LoginPage() {
     } catch (err) {
       if (isAxiosError(err) && !err.response) {
         setError(
-          "Backend nicht erreichbar (localhost:5000). Nutze unten „Ohne Login C# lernen“ oder starte das Backend."
+          "Backend nicht erreichbar (localhost:5000). Nutze unten „Ohne Login C# lernen“."
         );
         return;
       }
-      setError("Login fehlgeschlagen. Prüfe deine Zugangsdaten oder registriere dich neu.");
+      setError("Login fehlgeschlagen. Prüfe Zugangsdaten oder registriere dich neu.");
     }
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-slate-950 px-6">
-      <form
-        onSubmit={handleSubmit}
-        className="w-full max-w-md rounded-2xl border border-slate-800 bg-slate-900 p-8 shadow-2xl"
-      >
-        <h1 className="text-3xl font-bold">ExamPilot</h1>
-        <p className="mt-2 text-slate-400">
-          Melde dich an und tracke deinen IHK-Lernfortschritt.
-        </p>
+    <AuthShell
+      brandTitle="Lernen, das sich gut anfühlt."
+      brandSubtitle="C# und .NET Framework verstehen — mit klaren Erklärungen, Walkthroughs und Übungen für deine Klassenarbeit."
+    >
+      <form onSubmit={handleSubmit}>
+        <h2 className="font-display text-2xl font-semibold text-white">Willkommen zurück</h2>
+        <p className="mt-2 text-sm text-slate-400">Melde dich an oder starte direkt im Demo-Modus.</p>
 
         {error && (
-          <div className="mt-6 rounded-lg border border-red-900 bg-red-950 p-3 text-sm text-red-200">
+          <div className="mt-5 rounded-xl border border-rose-400/30 bg-rose-500/10 p-3 text-sm text-rose-100">
             {error}
           </div>
         )}
 
-        <label className="mt-6 block text-sm text-slate-300">E-Mail</label>
+        <label className="mt-6 block text-sm font-medium text-slate-300">E-Mail</label>
         <input
-          className="mt-2 w-full rounded-lg border border-slate-700 bg-slate-950 px-4 py-3 outline-none focus:border-blue-500"
+          className="ep-input"
           value={email}
           onChange={(event) => setEmail(event.target.value)}
         />
 
-        <label className="mt-4 block text-sm text-slate-300">Passwort</label>
+        <label className="mt-4 block text-sm font-medium text-slate-300">Passwort</label>
         <input
           type="password"
-          className="mt-2 w-full rounded-lg border border-slate-700 bg-slate-950 px-4 py-3 outline-none focus:border-blue-500"
+          className="ep-input"
           value={password}
           onChange={(event) => setPassword(event.target.value)}
         />
 
-        <button className="mt-6 w-full rounded-lg bg-blue-600 px-4 py-3 font-semibold hover:bg-blue-500">
-          Einloggen
-        </button>
+        <button className="ep-btn-primary mt-6 w-full">Einloggen</button>
 
         <button
           type="button"
           onClick={() => startDemoLearning(navigate)}
-          className="mt-3 w-full rounded-lg border border-cyan-400/40 bg-cyan-500/10 px-4 py-3 font-semibold text-cyan-200 hover:bg-cyan-500/20"
+          className="ep-btn-secondary mt-3 w-full"
         >
-          Ohne Login C# lernen (empfohlen)
+          Ohne Login C# lernen
         </button>
 
-        <p className="mt-3 text-center text-xs leading-5 text-slate-500">
-          Login/Registrierung brauchen ein laufendes Backend auf Port 5000. Für die Klassenarbeit
-          reicht der Demo-Einstieg oben.
+        <p className="mt-4 text-center text-xs leading-5 text-slate-500">
+          Empfohlen für die Klassenarbeit: Demo starten — kein Backend nötig.
         </p>
 
-        <p className="mt-4 text-center text-sm text-slate-400">
+        <p className="mt-5 text-center text-sm text-slate-400">
           Noch kein Konto?{" "}
-          <Link to="/register" className="text-blue-400 hover:text-blue-300">
+          <Link to="/register" className="font-semibold text-cyan-300 hover:text-cyan-200">
             Registrieren
           </Link>
         </p>
       </form>
-    </div>
+    </AuthShell>
   );
 }

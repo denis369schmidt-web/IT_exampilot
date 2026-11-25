@@ -48,62 +48,74 @@ export function CsharpModulePage() {
   const doneCount = module.exercises.filter((item) => doneSet.has(item.id)).length;
   const completion = Math.round((doneCount / module.exercises.length) * 100);
 
+  const tabs = [
+    ["theory", "Theorie"],
+    ["walk", "Verstehen"],
+    ["practice", "Üben"],
+    ["cards", "Karteikarten"],
+    ["pitfalls", "Fallen"]
+  ] as const;
+
   return (
-    <div>
+    <div className="space-y-6">
       {toast && (
-        <div className="fixed right-6 top-20 z-50 animate-fade-up rounded-xl bg-cyan-400 px-4 py-3 text-sm font-bold text-slate-950 shadow-2xl">
+        <div className="fixed right-6 top-20 z-50 animate-fade-up rounded-xl bg-cyan-400 px-4 py-3 text-sm font-bold text-slate-950 shadow-glow">
           {toast}
         </div>
       )}
 
-      <Link to="/csharp" className="text-sm font-semibold text-cyan-300 hover:text-cyan-200">
-        Zurück zum C# Dojo
+      <Link
+        to="/csharp"
+        className="inline-flex items-center gap-2 text-sm font-semibold text-cyan-300 transition hover:text-cyan-200"
+      >
+        ← Zurück zum C# Dojo
       </Link>
 
-      <div className="mt-5 flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
-        <div>
-          <div className="flex flex-wrap gap-2 text-xs font-semibold">
-            <span className={`rounded bg-slate-800 px-2 py-1 ${csharpLevelColors[module.level]}`}>
-              {module.level}
-            </span>
-            <span className="rounded bg-slate-800 px-2 py-1 text-slate-300">
-              Modul {module.order}
-            </span>
-            <span className="rounded bg-slate-800 px-2 py-1 text-emerald-300">
-              {doneCount}/{module.exercises.length} Übungen
-            </span>
-            {combo > 1 && (
-              <span className="rounded bg-orange-500 px-2 py-1 text-slate-950 animate-pulse">
-                Combo x{combo}
+      <section className="ep-panel relative overflow-hidden p-6 md:p-8">
+        <div className="pointer-events-none absolute -right-12 -top-16 h-48 w-48 rounded-full bg-cyan-400/15 blur-3xl" />
+        <div className="relative flex flex-col gap-5 md:flex-row md:items-start md:justify-between">
+          <div>
+            <div className="flex flex-wrap gap-2">
+              <span className={`ep-chip ${csharpLevelColors[module.level]}`}>{module.level}</span>
+              <span className="ep-chip text-slate-300">Modul {module.order}</span>
+              <span className="ep-chip text-emerald-300">
+                {doneCount}/{module.exercises.length} Übungen
               </span>
-            )}
+              {combo > 1 && (
+                <span className="ep-chip animate-pulse border-orange-400/40 bg-orange-400/20 text-orange-200">
+                  Combo x{combo}
+                </span>
+              )}
+            </div>
+            <h1 className="font-display mt-4 text-3xl font-bold text-white md:text-4xl">
+              {module.title}
+            </h1>
+            <p className="mt-3 max-w-3xl text-base leading-7 text-slate-400">{module.whyItMatters}</p>
+            <p className="mt-2 text-xs text-slate-500">{module.examFocus}</p>
           </div>
-          <h1 className="mt-3 text-4xl font-bold tracking-tight text-white">{module.title}</h1>
-          <p className="mt-3 max-w-3xl text-slate-400">{module.whyItMatters}</p>
-          <p className="mt-2 text-xs text-slate-500">{module.examFocus}</p>
-        </div>
 
-        <div className="rounded-2xl border border-slate-800 bg-slate-900 px-5 py-4 text-center">
-          <p className="text-3xl font-bold text-white">{completion}%</p>
-          <p className="text-xs text-slate-400">Modul-Fortschritt</p>
+          <div className="ep-panel-soft min-w-[140px] px-5 py-4 text-center">
+            <p className="font-display text-3xl font-bold text-white">{completion}%</p>
+            <p className="mt-1 text-xs text-slate-400">Fortschritt</p>
+            <div className="mt-3 h-1.5 overflow-hidden rounded-full bg-slate-800">
+              <div
+                className="h-full rounded-full bg-gradient-to-r from-cyan-400 to-emerald-400"
+                style={{ width: `${completion}%` }}
+              />
+            </div>
+          </div>
         </div>
-      </div>
+      </section>
 
-      <div className="mt-6 flex flex-wrap gap-2 border-y border-slate-800 py-4">
-        {(
-          [
-            ["theory", "Theorie"],
-            ["walk", "Verstehen"],
-            ["practice", "Üben"],
-            ["cards", "Karteikarten"],
-            ["pitfalls", "Fallen"]
-          ] as const
-        ).map(([id, label]) => (
+      <div className="flex flex-wrap gap-2">
+        {tabs.map(([id, label]) => (
           <button
             key={id}
             onClick={() => setTab(id)}
-            className={`rounded-lg px-4 py-2 text-sm font-semibold ${
-              tab === id ? "bg-cyan-400 text-slate-950" : "bg-slate-900 text-slate-300 hover:bg-slate-800"
+            className={`rounded-xl px-4 py-2.5 text-sm font-semibold transition ${
+              tab === id
+                ? "bg-cyan-400 text-slate-950 shadow-glow"
+                : "border border-white/10 bg-slate-900/60 text-slate-300 hover:bg-slate-800"
             }`}
           >
             {label}
@@ -112,9 +124,9 @@ export function CsharpModulePage() {
       </div>
 
       {tab === "theory" && (
-        <section className="mt-6 grid gap-5">
+        <section className="grid gap-5 animate-fade-up">
           {module.analogy && (
-            <article className="rounded-2xl border border-amber-500/30 bg-amber-500/10 p-5 animate-fade-up">
+            <article className="ep-panel border-amber-400/25 bg-amber-500/10 p-5">
               <p className="text-xs font-semibold uppercase tracking-[0.25em] text-amber-300">
                 Lehrer · Bild im Kopf
               </p>
@@ -123,7 +135,7 @@ export function CsharpModulePage() {
           )}
 
           {module.teacherTalk && module.teacherTalk.length > 0 && (
-            <article className="rounded-2xl border border-sky-500/30 bg-sky-500/10 p-5">
+            <article className="ep-panel border-sky-400/25 bg-sky-500/10 p-5">
               <p className="text-xs font-semibold uppercase tracking-[0.25em] text-sky-300">
                 Lehrer erklärt
               </p>
@@ -136,25 +148,28 @@ export function CsharpModulePage() {
           )}
 
           <div className="grid gap-5 lg:grid-cols-2">
-            <article className="rounded-2xl border border-slate-800 bg-slate-900 p-5">
-              <h2 className="text-xl font-bold">Sachlich auf den Punkt</h2>
+            <article className="ep-panel p-5">
+              <h2 className="font-display text-xl font-bold text-white">Sachlich auf den Punkt</h2>
               <div className="mt-4 space-y-4 text-sm leading-7 text-slate-300">
                 {module.theory.map((item) => (
                   <p key={item}>{item}</p>
                 ))}
               </div>
             </article>
-            <article className="rounded-2xl border border-slate-800 bg-slate-900 p-5">
-              <h2 className="text-xl font-bold">Lernziele</h2>
+            <article className="ep-panel p-5">
+              <h2 className="font-display text-xl font-bold text-white">Lernziele</h2>
               <ul className="mt-4 space-y-3 text-sm leading-7 text-slate-300">
                 {module.goals.map((item) => (
-                  <li key={item}>▹ {item}</li>
+                  <li key={item} className="flex gap-2">
+                    <span className="text-cyan-400">▹</span>
+                    <span>{item}</span>
+                  </li>
                 ))}
               </ul>
               <h3 className="mt-6 text-lg font-bold text-cyan-300">Merke</h3>
               <ul className="mt-3 space-y-2 text-sm text-slate-300">
                 {module.remember.map((item) => (
-                  <li key={item} className="rounded-lg bg-slate-950 px-3 py-2">
+                  <li key={item} className="rounded-xl border border-white/5 bg-slate-950/70 px-3 py-2">
                     {item}
                   </li>
                 ))}
@@ -163,7 +178,7 @@ export function CsharpModulePage() {
           </div>
 
           {module.proTips && module.proTips.length > 0 && (
-            <article className="rounded-2xl border border-emerald-500/30 bg-emerald-500/10 p-5">
+            <article className="ep-panel border-emerald-400/25 bg-emerald-500/10 p-5">
               <p className="text-xs font-semibold uppercase tracking-[0.25em] text-emerald-300">
                 Profi-Coder Tipps
               </p>
@@ -176,7 +191,7 @@ export function CsharpModulePage() {
           )}
 
           {module.checkUnderstanding && module.checkUnderstanding.length > 0 && (
-            <article className="rounded-2xl border border-violet-500/30 bg-violet-500/10 p-5">
+            <article className="ep-panel border-violet-400/25 bg-violet-500/10 p-5">
               <p className="text-xs font-semibold uppercase tracking-[0.25em] text-violet-300">
                 Verstehst du es? — laut beantworten
               </p>
@@ -190,12 +205,9 @@ export function CsharpModulePage() {
 
           <div className="grid gap-5">
             {module.codeExamples.map((example) => (
-              <article
-                key={example.title}
-                className="rounded-2xl border border-slate-800 bg-slate-900 p-5 animate-fade-up"
-              >
-                <h2 className="text-xl font-bold">{example.title}</h2>
-                <pre className="mt-4 overflow-x-auto rounded-xl bg-slate-950 p-4 font-mono text-sm leading-7 text-emerald-200">
+              <article key={example.title} className="ep-panel p-5">
+                <h2 className="font-display text-xl font-bold text-white">{example.title}</h2>
+                <pre className="mt-4 overflow-x-auto rounded-2xl border border-white/5 bg-slate-950 p-4 font-mono text-sm leading-7 text-emerald-200">
                   {example.code}
                 </pre>
                 <p className="mt-3 text-sm text-slate-400">{example.note}</p>
@@ -205,17 +217,11 @@ export function CsharpModulePage() {
 
           <div className="flex flex-wrap gap-3">
             {module.walkthrough && (
-              <button
-                onClick={() => setTab("walk")}
-                className="rounded-xl bg-slate-100 px-5 py-3 text-sm font-bold text-slate-950 hover:bg-white"
-              >
+              <button onClick={() => setTab("walk")} className="ep-btn-ghost">
                 Schritt-für-Schritt verstehen →
               </button>
             )}
-            <button
-              onClick={() => setTab("practice")}
-              className="rounded-xl bg-cyan-400 px-5 py-3 text-sm font-bold text-slate-950 hover:bg-cyan-300"
-            >
+            <button onClick={() => setTab("practice")} className="ep-btn-primary">
               Jetzt interaktiv üben →
             </button>
           </div>
@@ -223,7 +229,7 @@ export function CsharpModulePage() {
       )}
 
       {tab === "walk" && (
-        <section className="mt-6">
+        <section className="animate-fade-up">
           {module.walkthrough ? (
             <CodeWalkthrough
               title={module.walkthrough.title}
@@ -231,7 +237,7 @@ export function CsharpModulePage() {
               steps={module.walkthrough.steps}
             />
           ) : (
-            <div className="rounded-2xl border border-slate-800 bg-slate-900 p-5 text-sm text-slate-400">
+            <div className="ep-panel p-5 text-sm text-slate-400">
               Für dieses Modul gibt es noch keinen Walkthrough. Nutze Theorie + Trace-Übungen.
             </div>
           )}
@@ -239,7 +245,7 @@ export function CsharpModulePage() {
       )}
 
       {tab === "practice" && exercise && (
-        <section className="mt-6 grid gap-5">
+        <section className="grid gap-5 animate-fade-up">
           <div className="flex flex-wrap items-center justify-between gap-3">
             <p className="text-sm text-slate-400">
               Übung {exerciseIndex + 1} / {module.exercises.length}
@@ -247,7 +253,7 @@ export function CsharpModulePage() {
             <div className="flex gap-2">
               <button
                 onClick={() => setExerciseIndex((value) => Math.max(0, value - 1))}
-                className="rounded-lg bg-slate-800 px-3 py-2 text-sm hover:bg-slate-700"
+                className="ep-btn-ghost !py-2"
               >
                 Zurück
               </button>
@@ -255,7 +261,7 @@ export function CsharpModulePage() {
                 onClick={() =>
                   setExerciseIndex((value) => Math.min(module.exercises.length - 1, value + 1))
                 }
-                className="rounded-lg bg-slate-800 px-3 py-2 text-sm hover:bg-slate-700"
+                className="ep-btn-ghost !py-2"
               >
                 Weiter
               </button>
@@ -291,17 +297,17 @@ export function CsharpModulePage() {
       )}
 
       {tab === "cards" && (
-        <section className="mt-6">
-          <div className="rounded-2xl border border-slate-800 bg-slate-900 p-6">
+        <section className="animate-fade-up">
+          <div className="ep-panel p-6">
             <div className="flex items-center justify-between">
-              <h2 className="text-xl font-bold">Karteikarten</h2>
+              <h2 className="font-display text-xl font-bold text-white">Karteikarten</h2>
               <p className="text-sm text-slate-400">
                 {cardIndex + 1} / {module.flashcards.length}
               </p>
             </div>
             <button
               onClick={() => setShowBack((value) => !value)}
-              className="mt-5 min-h-56 w-full rounded-2xl border border-slate-700 bg-slate-950 p-8 text-left transition hover:border-cyan-400"
+              className="mt-5 min-h-56 w-full rounded-2xl border border-white/10 bg-slate-950/80 p-8 text-left transition hover:border-cyan-400/50 hover:shadow-glow"
             >
               <p className="text-xs font-semibold uppercase tracking-[0.25em] text-cyan-300">
                 {showBack ? "Antwort" : "Frage"}
@@ -317,7 +323,7 @@ export function CsharpModulePage() {
                   setCardIndex((value) => (value === 0 ? module.flashcards.length - 1 : value - 1));
                   setShowBack(false);
                 }}
-                className="rounded-lg bg-slate-800 px-4 py-3 text-sm font-semibold"
+                className="ep-btn-ghost"
               >
                 Zurück
               </button>
@@ -326,7 +332,7 @@ export function CsharpModulePage() {
                   setCardIndex((value) => (value + 1) % module.flashcards.length);
                   setShowBack(false);
                 }}
-                className="rounded-lg bg-cyan-400 px-4 py-3 text-sm font-bold text-slate-950"
+                className="ep-btn-primary"
               >
                 Nächste
               </button>
@@ -336,11 +342,11 @@ export function CsharpModulePage() {
       )}
 
       {tab === "pitfalls" && (
-        <section className="mt-6 grid gap-4 md:grid-cols-2">
+        <section className="grid gap-4 animate-fade-up md:grid-cols-2">
           {module.pitfalls.map((item) => (
             <article
               key={item}
-              className="rounded-2xl border border-rose-900/50 bg-rose-950/20 p-5 text-sm leading-7 text-rose-100"
+              className="ep-panel border-rose-400/20 bg-rose-950/25 p-5 text-sm leading-7 text-rose-100"
             >
               ⚠ {item}
             </article>

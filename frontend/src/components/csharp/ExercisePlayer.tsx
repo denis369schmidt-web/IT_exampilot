@@ -29,7 +29,6 @@ export function ExercisePlayer({ exercise, alreadyDone, onSolved }: ExercisePlay
       const j = Math.floor(Math.random() * (i + 1));
       [indexes[i], indexes[j]] = [indexes[j], indexes[i]];
     }
-    // Avoid starting already solved
     const alreadyCorrect = indexes.every((value, index) => value === exercise.correctOrder[index]);
     if (alreadyCorrect && indexes.length > 1) {
       [indexes[0], indexes[1]] = [indexes[1], indexes[0]];
@@ -110,22 +109,26 @@ export function ExercisePlayer({ exercise, alreadyDone, onSolved }: ExercisePlay
   }
 
   return (
-    <div className={`rounded-2xl border border-slate-800 bg-slate-900/90 p-5 shadow-xl ${shake ? "animate-shake" : ""}`}>
-      <div className="flex flex-wrap items-center gap-2 text-xs font-semibold">
-        <span className="rounded bg-cyan-500/20 px-2 py-1 text-cyan-300">{exerciseLabel(exercise.kind)}</span>
-        <span className="rounded bg-slate-800 px-2 py-1 text-slate-300">+{exercise.xp} XP</span>
+    <div className={`ep-panel p-5 md:p-6 ${shake ? "animate-shake" : ""}`}>
+      <div className="flex flex-wrap items-center gap-2">
+        <span className="ep-chip text-cyan-300">{exerciseLabel(exercise.kind)}</span>
+        <span className="ep-chip text-slate-300">+{exercise.xp} XP</span>
         {alreadyDone && (
-          <span className="rounded bg-emerald-500 px-2 py-1 text-slate-950">Schon gelöst</span>
+          <span className="ep-chip border-emerald-400/30 bg-emerald-400/15 text-emerald-200">
+            Schon gelöst
+          </span>
         )}
       </div>
 
-      <h3 className="mt-3 text-xl font-bold text-white">{exercise.prompt}</h3>
+      <h3 className="font-display mt-4 text-xl font-bold text-white md:text-2xl">
+        {exercise.prompt}
+      </h3>
 
       {(exercise.kind === "predictOutput" ||
         exercise.kind === "fillBlank" ||
         exercise.kind === "spotBug" ||
         exercise.kind === "traceState") && (
-        <pre className="mt-4 overflow-x-auto rounded-xl border border-slate-700 bg-slate-950 p-4 font-mono text-sm leading-7 text-emerald-200">
+        <pre className="mt-4 overflow-x-auto rounded-2xl border border-white/5 bg-slate-950 p-4 font-mono text-sm leading-7 text-emerald-200">
           {exercise.kind === "fillBlank"
             ? exercise.code
             : codeLines.map((line, index) => {
@@ -137,7 +140,7 @@ export function ExercisePlayer({ exercise, alreadyDone, onSolved }: ExercisePlay
                     type="button"
                     disabled={exercise.kind !== "spotBug" || Boolean(feedback)}
                     onClick={() => setBugLine(lineNo)}
-                    className={`block w-full rounded px-2 text-left ${
+                    className={`block w-full rounded-lg px-2 text-left transition ${
                       exercise.kind === "spotBug" ? "hover:bg-rose-500/10" : ""
                     } ${active ? "bg-rose-500/20 ring-1 ring-rose-400" : ""}`}
                   >
@@ -172,8 +175,8 @@ export function ExercisePlayer({ exercise, alreadyDone, onSolved }: ExercisePlay
                     : showWrong
                       ? "border-rose-400 bg-rose-500/20 text-rose-100"
                       : active
-                        ? "border-cyan-400 bg-cyan-500/10 text-white"
-                        : "border-slate-700 bg-slate-950 text-slate-300 hover:border-slate-500"
+                        ? "border-cyan-400 bg-cyan-500/10 text-white shadow-glow"
+                        : "border-white/10 bg-slate-950/70 text-slate-300 hover:border-white/25"
                 }`}
               >
                 {option}
@@ -194,7 +197,7 @@ export function ExercisePlayer({ exercise, alreadyDone, onSolved }: ExercisePlay
                 onChange={(event) =>
                   setBlankAnswers((current) => ({ ...current, [blank.id]: event.target.value }))
                 }
-                className="mt-1 w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 font-mono text-cyan-200 outline-none focus:border-cyan-400"
+                className="ep-input font-mono text-cyan-200"
                 placeholder="Antwort eingeben"
               />
             </label>
@@ -207,7 +210,7 @@ export function ExercisePlayer({ exercise, alreadyDone, onSolved }: ExercisePlay
           {order.map((lineIndex, position) => (
             <div
               key={`${lineIndex}-${position}`}
-              className="flex items-center gap-2 rounded-xl border border-slate-700 bg-slate-950 px-3 py-2 font-mono text-sm text-slate-200"
+              className="flex items-center gap-2 rounded-xl border border-white/10 bg-slate-950/70 px-3 py-2 font-mono text-sm text-slate-200"
             >
               <span className="text-slate-500">{position + 1}.</span>
               <span className="flex-1">{exercise.lines[lineIndex]}</span>
@@ -215,7 +218,7 @@ export function ExercisePlayer({ exercise, alreadyDone, onSolved }: ExercisePlay
                 type="button"
                 disabled={Boolean(feedback)}
                 onClick={() => moveOrder(position, -1)}
-                className="rounded bg-slate-800 px-2 py-1 text-xs hover:bg-slate-700"
+                className="rounded-lg bg-slate-800 px-2 py-1 text-xs hover:bg-slate-700"
               >
                 ↑
               </button>
@@ -223,7 +226,7 @@ export function ExercisePlayer({ exercise, alreadyDone, onSolved }: ExercisePlay
                 type="button"
                 disabled={Boolean(feedback)}
                 onClick={() => moveOrder(position, 1)}
-                className="rounded bg-slate-800 px-2 py-1 text-xs hover:bg-slate-700"
+                className="rounded-lg bg-slate-800 px-2 py-1 text-xs hover:bg-slate-700"
               >
                 ↓
               </button>
@@ -237,24 +240,23 @@ export function ExercisePlayer({ exercise, alreadyDone, onSolved }: ExercisePlay
       )}
 
       {!feedback && (
-        <button
-          onClick={check}
-          className="mt-5 rounded-xl bg-cyan-400 px-5 py-3 text-sm font-bold text-slate-950 hover:bg-cyan-300"
-        >
+        <button onClick={check} className="ep-btn-primary mt-5">
           Antwort prüfen
         </button>
       )}
 
       {feedback && (
         <div
-          className={`mt-5 animate-fade-up rounded-xl border p-4 text-sm leading-6 ${
+          className={`mt-5 animate-fade-up rounded-2xl border p-4 text-sm leading-6 ${
             feedback.correct
               ? "border-emerald-400/40 bg-emerald-500/10 text-emerald-100"
               : "border-rose-400/40 bg-rose-500/10 text-rose-100"
           }`}
         >
           <p className="font-bold">
-            {feedback.correct ? `Richtig! +${feedback.xp} XP` : `Noch nicht — +${feedback.xp} XP fürs Lernen`}
+            {feedback.correct
+              ? `Richtig! +${feedback.xp} XP`
+              : `Noch nicht — +${feedback.xp} XP fürs Lernen`}
           </p>
           <p className="mt-2">{feedback.explanation}</p>
           {exercise.kind === "spotBug" && (
