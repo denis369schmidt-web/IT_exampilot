@@ -5,8 +5,11 @@ export function Layout() {
 
   function logout() {
     localStorage.removeItem("exampilot_token");
+    localStorage.removeItem("exampilot_demo_mode");
     navigate("/login");
   }
+
+  const demoMode = localStorage.getItem("exampilot_demo_mode") === "1";
 
   return (
     <div className="min-h-screen bg-slate-950">
@@ -39,6 +42,12 @@ export function Layout() {
       </header>
 
       <main className="mx-auto max-w-6xl px-6 py-8">
+        {demoMode && (
+          <div className="mb-6 rounded-xl border border-cyan-500/30 bg-cyan-500/10 px-4 py-3 text-sm text-cyan-100">
+            Demo-Modus aktiv: C# Dojo und Lernseiten funktionieren ohne Backend. Login/Dashboard
+            brauchen weiterhin API auf Port 5000.
+          </div>
+        )}
         <Outlet />
       </main>
     </div>

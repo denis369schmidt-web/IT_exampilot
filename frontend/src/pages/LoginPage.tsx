@@ -1,6 +1,13 @@
 import { FormEvent, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { isAxiosError } from "axios";
 import { login } from "../api/auth";
+
+function startDemoLearning(navigate: ReturnType<typeof useNavigate>) {
+  localStorage.setItem("exampilot_token", "demo-local-learning");
+  localStorage.setItem("exampilot_demo_mode", "1");
+  navigate("/csharp");
+}
 
 export function LoginPage() {
   const navigate = useNavigate();
@@ -15,9 +22,16 @@ export function LoginPage() {
     try {
       const result = await login({ email, password });
       localStorage.setItem("exampilot_token", result.token);
+      localStorage.removeItem("exampilot_demo_mode");
       navigate("/");
-    } catch {
-      setError("Login fehlgeschlagen. Prüfe deine Zugangsdaten.");
+    } catch (err) {
+      if (isAxiosError(err) && !err.response) {
+        setError(
+          "Backend nicht erreichbar (localhost:5000). Nutze unten „Ohne Login C# lernen“ oder starte das Backend."
+        );
+        return;
+      }
+      setError("Login fehlgeschlagen. Prüfe deine Zugangsdaten oder registriere dich neu.");
     }
   }
 
@@ -56,6 +70,19 @@ export function LoginPage() {
         <button className="mt-6 w-full rounded-lg bg-blue-600 px-4 py-3 font-semibold hover:bg-blue-500">
           Einloggen
         </button>
+
+        <button
+          type="button"
+          onClick={() => startDemoLearning(navigate)}
+          className="mt-3 w-full rounded-lg border border-cyan-400/40 bg-cyan-500/10 px-4 py-3 font-semibold text-cyan-200 hover:bg-cyan-500/20"
+        >
+          Ohne Login C# lernen (empfohlen)
+        </button>
+
+        <p className="mt-3 text-center text-xs leading-5 text-slate-500">
+          Login/Registrierung brauchen ein laufendes Backend auf Port 5000. Für die Klassenarbeit
+          reicht der Demo-Einstieg oben.
+        </p>
 
         <p className="mt-4 text-center text-sm text-slate-400">
           Noch kein Konto?{" "}
